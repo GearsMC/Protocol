@@ -200,5 +200,13 @@ public enum EntityFlag {
     /**
      * @since v975
      */
+<<<<<<< ours
     NAMEPLATE_DEPTH_TESTED
+=======
+    NAMEPLATE_DEPTH_TESTED,
+    /**
+     * @since v2168
+     */
+    NOT_PICKABLE_FROM_INSIDE,
+>>>>>>> theirs
 }

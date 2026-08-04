@@ -37,7 +37,11 @@ public class ResourcePackClientResponsePacket implements BedrockPacket {
 
     public enum Status {
         /**
+<<<<<<< ours
          * Default/unset status.
+=======
+         * @deprecated since v2168
+>>>>>>> theirs
          */
         NONE,
         /**

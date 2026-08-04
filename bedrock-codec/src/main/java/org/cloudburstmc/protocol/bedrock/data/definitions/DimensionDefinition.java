@@ -14,7 +14,26 @@ package org.cloudburstmc.protocol.bedrock.data.definitions;
 public record DimensionDefinition(String id, int maximumHeight, int minimumHeight, int generatorType,
                                   int dimensionType) {
 
+<<<<<<< ours
     public DimensionDefinition(String id, int maximumHeight, int minimumHeight, int generatorType) {
         this(id, maximumHeight, minimumHeight, generatorType, 0);
     }
+=======
+import java.util.UUID;
+
+@Value
+public class DimensionDefinition {
+    String id;
+    int maximumHeight;
+    int minimumHeight;
+    int generatorType;
+    /**
+     * @since v975
+     */
+    int dimensionType;
+    /**
+     * @since v2168
+     */
+    UUID packId;
+>>>>>>> theirs
 }

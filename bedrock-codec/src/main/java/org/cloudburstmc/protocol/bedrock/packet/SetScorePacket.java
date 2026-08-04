@@ -17,7 +17,11 @@ import java.util.List;
 @ToString(doNotUseGetters = true)
 public class SetScorePacket implements BedrockPacket {
     /**
+<<<<<<< ours
      * The scoreboard operation to apply to {@link #infos}.
+=======
+     * @deprecated since v2168, now uses ScorerType from ScoreInfo
+>>>>>>> theirs
      */
     private Action action;
     /**
@@ -34,6 +38,9 @@ public class SetScorePacket implements BedrockPacket {
         return BedrockPacketType.SET_SCORE;
     }
 
+    /**
+     * @deprecated since v2168
+     */
     public enum Action {
         /**
          * Add new entries or update existing ones.

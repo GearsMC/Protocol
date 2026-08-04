@@ -17,8 +17,30 @@ import java.util.List;
  * @param numberOfRequestedCrafts NumberOfCrafts is how many times the recipe was crafted. This field is just a duplicate of
  *                                TimesCrafted.
  */
+<<<<<<< ours
 public record AutoCraftRecipeAction(int recipeNetworkId, int timesCrafted, List<ItemDescriptorWithCount> ingredients,
                                     int numberOfRequestedCrafts) implements RecipeItemStackRequestAction {
+=======
+@Value
+public class AutoCraftRecipeAction implements RecipeItemStackRequestAction {
+    int recipeNetworkId;
+    /**
+     * @since v448
+     * @deprecated since v2168
+     */
+    int timesCrafted;
+
+    /**
+     * @since v557
+     */
+    List<ItemDescriptorWithCount> ingredients;
+
+    /**
+     * @since v712
+     */
+    int numberOfRequestedCrafts;
+
+>>>>>>> theirs
     @Override
     public ItemStackRequestActionType getType() {
         return ItemStackRequestActionType.CRAFT_RECIPE_AUTO;

@@ -23,8 +23,13 @@ public enum InputMode {
      *
      * @deprecated since v859
      */
+<<<<<<< ours
     @Deprecated
     MOTION_CONTROLLER;
+=======
+    MOTION_CONTROLLER,
+    COUNT;
+>>>>>>> theirs
 
     private static final InputMode[] VALUES = values();
 

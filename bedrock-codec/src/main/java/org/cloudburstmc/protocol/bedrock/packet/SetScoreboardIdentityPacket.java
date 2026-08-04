@@ -44,6 +44,7 @@ public class SetScoreboardIdentityPacket implements BedrockPacket {
         REMOVE
     }
 
+<<<<<<< ours
     public record Entry(
             /**
              * The numeric scoreboard entry identifier whose backing identity should be updated.
@@ -53,6 +54,29 @@ public class SetScoreboardIdentityPacket implements BedrockPacket {
              * The UUID to associate with the scoreboard entry when {@link Action#ADD} is used.
              */
             UUID uuid) {
+=======
+    @Data
+    public static class Entry {
+        long scoreboardId;
+        /**
+         * @since v2168
+         */
+        long playerId;
+        /**
+         * @deprecated since v2168
+         */
+        UUID uuid;
+
+        public Entry(long scoreboardId, UUID uuid) {
+            this.scoreboardId = scoreboardId;
+            this.uuid = uuid;
+        }
+
+        public Entry(long scoreboardId, long playerId) {
+            this.scoreboardId = scoreboardId;
+            this.playerId = playerId;
+        }
+>>>>>>> theirs
     }
 
     @Override

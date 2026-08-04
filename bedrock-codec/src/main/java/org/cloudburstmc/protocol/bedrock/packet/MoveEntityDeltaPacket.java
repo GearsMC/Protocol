@@ -26,6 +26,7 @@ public class MoveEntityDeltaPacket implements BedrockPacket {
      */
     private final Set<Flag> flags = EnumSet.noneOf(Flag.class);
 
+<<<<<<< ours
     /**
      * The new absolute X position, if {@link Flag#HAS_X} is present.
      */
@@ -37,6 +38,13 @@ public class MoveEntityDeltaPacket implements BedrockPacket {
     /**
      * The new absolute Z position, if {@link Flag#HAS_Z} is present.
      */
+=======
+    @Deprecated
+    private int deltaX;
+    @Deprecated
+    private int deltaY;
+    @Deprecated
+>>>>>>> theirs
     private int deltaZ;
     /**
      * The new pitch, if {@link Flag#HAS_PITCH} is present.
@@ -69,6 +77,11 @@ public class MoveEntityDeltaPacket implements BedrockPacket {
      */
     private float z;
 
+    private boolean onGround;
+    private boolean forceMove;
+    private boolean forceMoveLocalEntity;
+    private boolean forceCompletion;
+
     @Override
     public final PacketSignal handle(BedrockPacketHandler handler) {
         return handler.handle(this);
@@ -79,6 +92,7 @@ public class MoveEntityDeltaPacket implements BedrockPacket {
     }
 
     public String toString() {
+<<<<<<< ours
         return "MoveEntityDeltaPacket(runtimeEntityId="
                + runtimeEntityId
                + ", flags="
@@ -102,6 +116,13 @@ public class MoveEntityDeltaPacket implements BedrockPacket {
                + ", "
                + headYaw
                + "))";
+=======
+        return "MoveEntityDeltaPacket(runtimeEntityId=" + runtimeEntityId +
+                ", flags=" + flags + ", delta=(" + deltaX + ", " + deltaY + ", " + deltaZ +
+                "), position=(" + x + ", " + y + ", " + z +
+                "), rotation=(" + pitch + ", " + yaw + ", " + headYaw + "), onGround=" + onGround +",forceMove=" +
+                forceMove + ",forceMoveLocalEntity=" + forceMoveLocalEntity + ",forceCompletion=" + forceCompletion + ")";
+>>>>>>> theirs
     }
 
     public enum Flag {

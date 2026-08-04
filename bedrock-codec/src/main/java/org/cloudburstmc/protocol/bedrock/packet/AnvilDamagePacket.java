@@ -13,8 +13,14 @@ import org.cloudburstmc.math.vector.Vector3i;
 @EqualsAndHashCode(doNotUseGetters = true)
 @ToString(doNotUseGetters = true)
 public class AnvilDamagePacket implements BedrockPacket {
+<<<<<<< ours
     /**
      * The damage that the client requests to be dealt to the anvil.
+=======
+
+    /**
+     * @deprecated since v2168
+>>>>>>> theirs
      */
     private int damage;
     /**

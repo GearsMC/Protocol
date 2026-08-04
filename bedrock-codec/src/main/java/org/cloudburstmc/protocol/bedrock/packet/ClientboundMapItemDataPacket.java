@@ -1,11 +1,10 @@
 package org.cloudburstmc.protocol.bedrock.packet;
 
-import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongList;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.cloudburstmc.math.vector.Vector3i;
 import org.cloudburstmc.protocol.bedrock.data.MapDecoration;
 import org.cloudburstmc.protocol.bedrock.data.MapTrackedObject;
@@ -22,6 +21,7 @@ import java.util.List;
 @EqualsAndHashCode(doNotUseGetters = true)
 @ToString(doNotUseGetters = true)
 public class ClientboundMapItemDataPacket implements BedrockPacket {
+<<<<<<< ours
     /**
      * Runtime tracking ids for entities associated with this map update.
      */
@@ -40,6 +40,14 @@ public class ClientboundMapItemDataPacket implements BedrockPacket {
      * MapID is the unique identifier that represents the map that is updated over network. It
      * remains consistent across sessions.
      */
+=======
+    @Nullable
+    private LongList trackedEntityIds;
+    @Nullable
+    private List<MapTrackedObject> trackedObjects;
+    @Nullable
+    private List<MapDecoration> decorations;
+>>>>>>> theirs
     private long uniqueMapId;
     /**
      * The dimension of the map being updated, for example overworld, nether, or end.
@@ -49,6 +57,7 @@ public class ClientboundMapItemDataPacket implements BedrockPacket {
      * The scale of the map as it is shown in-game. It is written when any of the MapUpdateFlags are
      * set to the UpdateFlags field.
      */
+<<<<<<< ours
     private int scale;
     /**
      * The height of the texture area that was updated. The height may be a subset of the total
@@ -73,6 +82,19 @@ public class ClientboundMapItemDataPacket implements BedrockPacket {
     /**
      * Pixel colours for the updated map texture region. Indexed as {@code colors[y * height + x]}.
      */
+=======
+    private Vector3i origin;
+    @Nullable
+    private Byte scale;
+    @Nullable
+    private Integer height;
+    @Nullable
+    private Integer width;
+    @Nullable
+    private Integer xOffset;
+    @Nullable
+    private Integer yOffset;
+>>>>>>> theirs
     private int[] colors;
     /**
      * Whether locked.

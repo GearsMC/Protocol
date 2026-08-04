@@ -34,8 +34,15 @@ public class PlaySoundPacket implements BedrockPacket {
      */
     private float pitch;
     /**
+<<<<<<< ours
      * Optional server-assigned sound handle for long-lived sounds.
      *
+=======
+     * @since v2168
+     */
+    private int loopCount;
+    /**
+>>>>>>> theirs
      * @since v975
      */
     private Long serverSoundHandle;
