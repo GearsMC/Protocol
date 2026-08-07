@@ -288,3 +288,5 @@ gradle-app.setting
 
 # IntelliJ
 .idea/
+# Sunucu calisma gunlukleri
+logs/
