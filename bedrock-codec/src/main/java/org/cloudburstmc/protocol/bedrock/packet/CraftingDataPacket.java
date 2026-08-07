@@ -7,12 +7,7 @@ import lombok.ToString;
 import org.cloudburstmc.protocol.bedrock.data.inventory.crafting.ContainerMixData;
 import org.cloudburstmc.protocol.bedrock.data.inventory.crafting.MaterialReducer;
 import org.cloudburstmc.protocol.bedrock.data.inventory.crafting.PotionMixData;
-<<<<<<< ours
-import org.cloudburstmc.protocol.bedrock.data.inventory.crafting.recipe.RecipeData;
-=======
 import org.cloudburstmc.protocol.bedrock.data.inventory.crafting.recipe.*;
-import org.cloudburstmc.protocol.common.PacketSignal;
->>>>>>> theirs
 
 import java.util.List;
 
@@ -26,15 +21,12 @@ import java.util.List;
 @EqualsAndHashCode(doNotUseGetters = true)
 public class CraftingDataPacket implements BedrockPacket {
     /**
-<<<<<<< ours
      * Recipes available on the server, including shaped, shapeless, furnace, and other crafting
      * station recipes.
-     */
-    private final List<RecipeData> craftingData = new ObjectArrayList<>();
-    /**
-     * Potion mixing recipes that can be used in a brewing stand.
-     */
-=======
+     *
+     * <p>Since v2168 the client expects each recipe kind in its own list; this combined list is
+     * only written by codecs before that.</p>
+     *
      * @deprecated since v2168
      */
     private final List<RecipeData> craftingData = new ObjectArrayList<>();
@@ -70,7 +62,9 @@ public class CraftingDataPacket implements BedrockPacket {
      * @since v2168
      */
     private final List<SmithingTrimRecipeData> smithingTrimData = new ObjectArrayList<>();
->>>>>>> theirs
+    /**
+     * Potion mixing recipes that can be used in a brewing stand.
+     */
     private final List<PotionMixData> potionMixData = new ObjectArrayList<>();
     /**
      * Recipes that convert potion containers between forms such as drinkable, splash, and

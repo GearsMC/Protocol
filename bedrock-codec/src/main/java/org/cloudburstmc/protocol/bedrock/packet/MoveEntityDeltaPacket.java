@@ -26,25 +26,26 @@ public class MoveEntityDeltaPacket implements BedrockPacket {
      */
     private final Set<Flag> flags = EnumSet.noneOf(Flag.class);
 
-<<<<<<< ours
     /**
      * The new absolute X position, if {@link Flag#HAS_X} is present.
+     *
+     * @deprecated since v2168
      */
+    @Deprecated
     private int deltaX;
     /**
      * The new absolute Y position, if {@link Flag#HAS_Y} is present.
+     *
+     * @deprecated since v2168
      */
+    @Deprecated
     private int deltaY;
     /**
      * The new absolute Z position, if {@link Flag#HAS_Z} is present.
+     *
+     * @deprecated since v2168
      */
-=======
     @Deprecated
-    private int deltaX;
-    @Deprecated
-    private int deltaY;
-    @Deprecated
->>>>>>> theirs
     private int deltaZ;
     /**
      * The new pitch, if {@link Flag#HAS_PITCH} is present.
@@ -92,7 +93,6 @@ public class MoveEntityDeltaPacket implements BedrockPacket {
     }
 
     public String toString() {
-<<<<<<< ours
         return "MoveEntityDeltaPacket(runtimeEntityId="
                + runtimeEntityId
                + ", flags="
@@ -115,14 +115,15 @@ public class MoveEntityDeltaPacket implements BedrockPacket {
                + yaw
                + ", "
                + headYaw
-               + "))";
-=======
-        return "MoveEntityDeltaPacket(runtimeEntityId=" + runtimeEntityId +
-                ", flags=" + flags + ", delta=(" + deltaX + ", " + deltaY + ", " + deltaZ +
-                "), position=(" + x + ", " + y + ", " + z +
-                "), rotation=(" + pitch + ", " + yaw + ", " + headYaw + "), onGround=" + onGround +",forceMove=" +
-                forceMove + ",forceMoveLocalEntity=" + forceMoveLocalEntity + ",forceCompletion=" + forceCompletion + ")";
->>>>>>> theirs
+               + "), onGround="
+               + onGround
+               + ", forceMove="
+               + forceMove
+               + ", forceMoveLocalEntity="
+               + forceMoveLocalEntity
+               + ", forceCompletion="
+               + forceCompletion
+               + ")";
     }
 
     public enum Flag {

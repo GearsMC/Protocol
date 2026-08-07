@@ -37,13 +37,16 @@ public class SubChunkData extends AbstractReferenceCounted {
      * Whether this entry uses blob caching.
      */
     private boolean cacheEnabled;
-<<<<<<< ours
     /**
      * The cached blob ID, used when {@link #cacheEnabled} is true.
      *
+     * <p>Boxed because v2168 writes it as an optional field; codecs before that
+     * always populate it when {@link #cacheEnabled} is set.</p>
+     *
      * @since v475
      */
-    private long blobId;
+    @Nullable
+    private Long blobId;
     /**
      * The render height map encoding type.
      *
@@ -56,10 +59,6 @@ public class SubChunkData extends AbstractReferenceCounted {
      * @since v818
      */
     private ByteBuf renderHeightMapData;
-=======
-    @Nullable
-    private Long blobId;
->>>>>>> theirs
 
     @Override
     public SubChunkData touch(Object hint) {

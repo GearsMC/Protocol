@@ -1,5 +1,7 @@
 package org.cloudburstmc.protocol.bedrock.data.definitions;
 
+import java.util.UUID;
+
 /**
  * Describes a data-driven dimension that may be registered through {@link
  * org.cloudburstmc.protocol.bedrock.packet.DimensionDataPacket}. The definition includes the
@@ -10,30 +12,18 @@ package org.cloudburstmc.protocol.bedrock.data.definitions;
  * @param minimumHeight the lower build limit of the dimension
  * @param generatorType the generator variant used for the dimension
  * @param dimensionType the numeric dimension type sent by modern codecs
+ * @param packId        the resource pack the dimension originates from, {@code null} on codecs
+ *                      before v2168
  */
 public record DimensionDefinition(String id, int maximumHeight, int minimumHeight, int generatorType,
-                                  int dimensionType) {
+                                  int dimensionType, UUID packId) {
 
-<<<<<<< ours
     public DimensionDefinition(String id, int maximumHeight, int minimumHeight, int generatorType) {
-        this(id, maximumHeight, minimumHeight, generatorType, 0);
+        this(id, maximumHeight, minimumHeight, generatorType, 0, null);
     }
-=======
-import java.util.UUID;
 
-@Value
-public class DimensionDefinition {
-    String id;
-    int maximumHeight;
-    int minimumHeight;
-    int generatorType;
-    /**
-     * @since v975
-     */
-    int dimensionType;
-    /**
-     * @since v2168
-     */
-    UUID packId;
->>>>>>> theirs
+    public DimensionDefinition(String id, int maximumHeight, int minimumHeight, int generatorType,
+                               int dimensionType) {
+        this(id, maximumHeight, minimumHeight, generatorType, dimensionType, null);
+    }
 }

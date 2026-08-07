@@ -17,11 +17,9 @@ import java.util.List;
 @ToString(doNotUseGetters = true)
 public class SetScorePacket implements BedrockPacket {
     /**
-<<<<<<< ours
      * The scoreboard operation to apply to {@link #infos}.
-=======
-     * @deprecated since v2168, now uses ScorerType from ScoreInfo
->>>>>>> theirs
+     *
+     * @deprecated since v2168, each {@code ScoreInfo} now carries its own {@code ScorerType}
      */
     private Action action;
     /**

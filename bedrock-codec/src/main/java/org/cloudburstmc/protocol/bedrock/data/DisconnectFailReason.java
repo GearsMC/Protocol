@@ -216,9 +216,6 @@ public enum DisconnectFailReason {
     /**
      * @since v975
      */
-<<<<<<< ours
-    NONCE_NOT_VALID
-=======
     NONCE_NOT_VALID,
     /**
      * @since v1001
@@ -251,6 +248,5 @@ public enum DisconnectFailReason {
     /**
      * @since v2164
      */
-    EDITOR_NOT_ALLOWED,
->>>>>>> theirs
+    EDITOR_NOT_ALLOWED
 }

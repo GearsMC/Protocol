@@ -40,15 +40,11 @@ public enum CameraEase {
     EASE_OUT_BOUNCE("out_bounce"),
     EASE_IN_OUT_BOUNCE("in_out_bounce");
 
-<<<<<<< ours
     /**
      * The serialize names.
      */
-    private static final Map<String, CameraEase> serializeNames = new HashMap<>();
-
-=======
     private static final Map<String, CameraEase> serializeNames = new HashMap<>(values().length, 1);
->>>>>>> theirs
+
     static {
         for (CameraEase value : values()) {
             serializeNames.put(value.getSerializeName(), value);

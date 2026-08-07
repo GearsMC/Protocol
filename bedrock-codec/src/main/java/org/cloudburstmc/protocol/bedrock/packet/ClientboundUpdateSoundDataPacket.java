@@ -3,12 +3,8 @@ package org.cloudburstmc.protocol.bedrock.packet;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-<<<<<<< ours
-=======
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.cloudburstmc.protocol.bedrock.data.sound.*;
-import org.cloudburstmc.protocol.common.PacketSignal;
->>>>>>> theirs
 
 /**
  * Sent by the server to update the state of a server-controlled sound.
@@ -25,11 +21,9 @@ public class ClientboundUpdateSoundDataPacket implements BedrockPacket {
      */
     private long serverSoundHandle;
     /**
-<<<<<<< ours
      * The sound event action to apply to the sound.
-=======
+     *
      * @deprecated since v2168
->>>>>>> theirs
      */
     private String type;
     /**

@@ -3,13 +3,9 @@ package org.cloudburstmc.protocol.bedrock.packet;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-<<<<<<< ours
 import org.cloudburstmc.protocol.bedrock.data.MemoryCategoryCounter;
+import org.cloudburstmc.protocol.bedrock.data.diagnostics.SystemCategory;
 import org.cloudburstmc.protocol.bedrock.data.diagnostics.WhiskerScopeDataSummary;
-=======
-import org.cloudburstmc.protocol.bedrock.data.diagnostics.*;
-import org.cloudburstmc.protocol.common.PacketSignal;
->>>>>>> theirs
 
 import java.util.ArrayList;
 import java.util.List;

@@ -28,12 +28,10 @@ public class PlayerListPacket implements BedrockPacket {
      */
     private final List<Entry> entries = new ObjectArrayList<>();
     /**
-<<<<<<< ours
      * The action to execute upon the player list. The entries that follow specify which entries are
      * added or removed from the player list.
-=======
-     * @deprecated since v2168, now in Entry
->>>>>>> theirs
+     *
+     * @deprecated since v2168, each {@link Entry} now carries its own action
      */
     private Action action;
 
@@ -60,18 +58,16 @@ public class PlayerListPacket implements BedrockPacket {
     @Data
     @ToString(doNotUseGetters = true)
     @EqualsAndHashCode(doNotUseGetters = true)
-<<<<<<< ours
     public static final class Entry {
         /**
-         * The player's UUID as sent during login.
-         */
-=======
-    public final static class Entry {
-        /**
+         * The action to execute for this entry.
+         *
          * @since v2168
          */
         private Action action;
->>>>>>> theirs
+        /**
+         * The player's UUID as sent during login.
+         */
         private final UUID uuid;
         /**
          * The player's unique entity ID.
@@ -89,13 +85,9 @@ public class PlayerListPacket implements BedrockPacket {
          * A platform-specific chat identifier, typically only populated on some consoles.
          */
         private String platformChatId;
-<<<<<<< ours
         /**
          * The skin that should be cached for this player list entry.
          */
-=======
-        private BuildPlatform buildPlatform = BuildPlatform.GOOGLE;
->>>>>>> theirs
         private SerializedSkin skin;
         /**
          * The platform reported by the player in the login chain.
@@ -116,13 +108,10 @@ public class PlayerListPacket implements BedrockPacket {
          */
         private boolean host;
         /**
-<<<<<<< ours
          * Whether the skin attached to this entry is trusted.
          *
          * @since v390
-=======
-         * @deprecated since v2168, now in SerializedSkin
->>>>>>> theirs
+         * @deprecated since v2168, moved into {@code SerializedSkin}
          */
         private boolean trustedSkin;
         /**

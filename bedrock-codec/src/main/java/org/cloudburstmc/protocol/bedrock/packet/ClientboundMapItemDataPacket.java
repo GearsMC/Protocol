@@ -1,6 +1,8 @@
 package org.cloudburstmc.protocol.bedrock.packet;
 
+import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongList;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -21,33 +23,30 @@ import java.util.List;
 @EqualsAndHashCode(doNotUseGetters = true)
 @ToString(doNotUseGetters = true)
 public class ClientboundMapItemDataPacket implements BedrockPacket {
-<<<<<<< ours
     /**
      * Runtime tracking ids for entities associated with this map update.
+     *
+     * <p>Not final since v2168: that codec reads the field as an optional and assigns it. It stays
+     * initialised so codecs before v2168, which mutate the list in place, keep working.</p>
      */
-    private final LongList trackedEntityIds = new LongArrayList();
+    @Nullable
+    private LongList trackedEntityIds = new LongArrayList();
     /**
      * A list of tracked objects on the map, which may either be entities or blocks. The client
      * makes sure these tracked objects are actually tracked. (position updated etc.).
      */
-    private final List<MapTrackedObject> trackedObjects = new ObjectArrayList<>();
+    @Nullable
+    private List<MapTrackedObject> trackedObjects = new ObjectArrayList<>();
     /**
      * A list of fixed decorations located on the map. The decorations will not change client-side,
      * unless the server updates them.
      */
-    private final List<MapDecoration> decorations = new ObjectArrayList<>();
+    @Nullable
+    private List<MapDecoration> decorations = new ObjectArrayList<>();
     /**
      * MapID is the unique identifier that represents the map that is updated over network. It
      * remains consistent across sessions.
      */
-=======
-    @Nullable
-    private LongList trackedEntityIds;
-    @Nullable
-    private List<MapTrackedObject> trackedObjects;
-    @Nullable
-    private List<MapDecoration> decorations;
->>>>>>> theirs
     private long uniqueMapId;
     /**
      * The dimension of the map being updated, for example overworld, nether, or end.
@@ -57,44 +56,35 @@ public class ClientboundMapItemDataPacket implements BedrockPacket {
      * The scale of the map as it is shown in-game. It is written when any of the MapUpdateFlags are
      * set to the UpdateFlags field.
      */
-<<<<<<< ours
-    private int scale;
+    @Nullable
+    private Byte scale = 0;
     /**
      * The height of the texture area that was updated. The height may be a subset of the total
      * height of the map.
      */
-    private int height;
+    @Nullable
+    private Integer height = 0;
     /**
      * The width of the texture area that was updated. The width may be a subset of the total width
      * of the map.
      */
-    private int width;
+    @Nullable
+    private Integer width = 0;
     /**
      * The X offset in pixels at which the updated texture area starts. From this X, the updated
      * texture will extend exactly Width pixels to the right.
      */
-    private int xOffset;
+    @Nullable
+    private Integer xOffset = 0;
     /**
      * The Y offset in pixels at which the updated texture area starts. From this Y, the updated
      * texture will extend exactly Height pixels up.
      */
-    private int yOffset;
+    @Nullable
+    private Integer yOffset = 0;
     /**
      * Pixel colours for the updated map texture region. Indexed as {@code colors[y * height + x]}.
      */
-=======
-    private Vector3i origin;
-    @Nullable
-    private Byte scale;
-    @Nullable
-    private Integer height;
-    @Nullable
-    private Integer width;
-    @Nullable
-    private Integer xOffset;
-    @Nullable
-    private Integer yOffset;
->>>>>>> theirs
     private int[] colors;
     /**
      * Whether locked.

@@ -1,18 +1,5 @@
 package org.cloudburstmc.protocol.bedrock.data.skin;
 
-<<<<<<< ours
-/**
- * Represents a piece of a persona skin. All pieces are sent separately.
- *
- * @param id        The ID.
- * @param type      The type.
- * @param packId    A UUID that identifies the pack that the persona piece belongs to.
- * @param isDefault Whether default.
- * @param productId A UUID that identifies the piece when it comes to purchases. It is empty for pieces that have
- *                  the 'IsDefault' field set to true.
- */
-public record PersonaPieceData(String id, String type, String packId, boolean isDefault, String productId) {
-=======
 import lombok.Data;
 
 import java.util.UUID;
@@ -57,5 +44,28 @@ public class PersonaPieceData {
     public String getType() {
         return pieceType.getSerializeName();
     }
->>>>>>> theirs
+
+    // Fork compatibility: this class used to be a record, so the codecs written
+    // before v2168 address it through record-style accessors. They are kept so
+    // the v2168 data model can be adopted without touching every older codec.
+
+    public String id() {
+        return id;
+    }
+
+    public String type() {
+        return getType();
+    }
+
+    public String packId() {
+        return getPackId();
+    }
+
+    public boolean isDefault() {
+        return isDefault;
+    }
+
+    public String productId() {
+        return productId;
+    }
 }

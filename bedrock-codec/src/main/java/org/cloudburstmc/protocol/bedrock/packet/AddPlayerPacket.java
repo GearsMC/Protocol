@@ -94,7 +94,6 @@ public class AddPlayerPacket implements BedrockPacket, PlayerAbilityHolder {
      * may be changed freely, so it should not be relied on for anything.
      */
     private String deviceId;
-<<<<<<< ours
     /**
      * The build platform/device OS of the player that is about to be added, as it sent in the Login
      * packet when joining.
@@ -108,9 +107,6 @@ public class AddPlayerPacket implements BedrockPacket, PlayerAbilityHolder {
      *
      * @since v503
      */
-=======
-    private BuildPlatform buildPlatform = BuildPlatform.GOOGLE;
->>>>>>> theirs
     private GameType gameType;
     /**
      * The full set of ability layers advertised for the player. This should at least contain the

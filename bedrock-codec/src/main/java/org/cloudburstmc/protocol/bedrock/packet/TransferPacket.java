@@ -3,11 +3,7 @@ package org.cloudburstmc.protocol.bedrock.packet;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-<<<<<<< ours
-=======
 import org.cloudburstmc.protocol.bedrock.data.GatheringsConfigurationJoinInfo;
-import org.cloudburstmc.protocol.common.PacketSignal;
->>>>>>> theirs
 
 /**
  * Sent by the server to transfer a player from the current server to another. Doing so will fully

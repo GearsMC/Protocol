@@ -12,13 +12,12 @@ public enum InputInteractionModel {
      * Crosshair-based interactions.
      */
     CROSSHAIR,
-<<<<<<< ours
     /**
      * Classic interactions.
      */
-    CLASSIC
-=======
     CLASSIC,
+    /**
+     * @since v2168
+     */
     COUNT
->>>>>>> theirs
 }

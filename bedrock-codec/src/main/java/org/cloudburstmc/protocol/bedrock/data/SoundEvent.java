@@ -1247,12 +1247,8 @@ public enum SoundEvent {
     STRAW_BED_BREAK_LEAVE("straw_bed.break_leave"),
     UNDEFINED("undefined");
 
-<<<<<<< ours
-    private static final Map<String, SoundEvent> SERIALIZE_NAMES = new HashMap<>(values().length);
+    private static final Map<String, SoundEvent> SERIALIZE_NAMES = new HashMap<>(values().length, 1);
 
-=======
-    private static final Map<String, SoundEvent> serializeNames = new HashMap<>(values().length, 1);
->>>>>>> theirs
     static {
         for (SoundEvent value : values()) {
             SERIALIZE_NAMES.put(value.getSerializeName(), value);

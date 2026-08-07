@@ -321,13 +321,7 @@ public class EntityDataTypes {
      * @since v924
      */
     public static final EntityDataType<Integer> AIM_ASSIST_PRIORITY_ACTOR_ID = new EntityDataType<>(Integer.class, "AIM_ASSIST_PRIORITY_ACTOR_ID");
-<<<<<<< ours
-=======
-    public static final EntityDataType<Long> ARROW_SHOOTER_ID = new EntityDataType<>(Long.class, "ARROW_SHOOTER_ID");
-    public static final EntityDataType<Long> FIREWORK_SHOOTER_ID = new EntityDataType<>(Long.class, "FIREWORK_SHOOTER_ID");
-    public static final EntityDataType<Vector3f> FIREWORK_DIRECTION = new EntityDataType<>(Vector3f.class, "FIREWORK_DIRECTION");
     public static final EntityDataType<Integer> UNKNOWN_HORSE_INT_25 = new EntityDataType<>(Integer.class, "UNKNOWN_HORSE_INT_25");
->>>>>>> theirs
     /**
      * @since v975
      */
