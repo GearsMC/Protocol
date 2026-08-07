@@ -58,12 +58,12 @@ public class ClientboundMapItemDataSerializer_v2168 extends ClientboundMapItemDa
         helper.writeOptionalNull(buffer, packet.getDecorations(), (buf, decorations) -> {
             VarInts.writeUnsignedInt(buf, decorations.size());
             for (MapDecoration decoration : decorations) {
-                buf.writeByte(decoration.getImage());
-                buf.writeByte(decoration.getRotation());
-                buf.writeByte(decoration.getXOffset());
-                buf.writeByte(decoration.getYOffset());
-                helper.writeString(buf, decoration.getLabel());
-                buf.writeIntLE(decoration.getColor());
+                buf.writeByte(decoration.image());
+                buf.writeByte(decoration.rotation());
+                buf.writeByte(decoration.xOffset());
+                buf.writeByte(decoration.yOffset());
+                helper.writeString(buf, decoration.label());
+                buf.writeIntLE(decoration.color());
             }
         });
 

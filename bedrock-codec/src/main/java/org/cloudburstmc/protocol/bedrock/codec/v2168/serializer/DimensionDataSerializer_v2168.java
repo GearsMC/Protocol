@@ -15,7 +15,7 @@ public class DimensionDataSerializer_v2168 extends DimensionDataSerializer_v975 
     @Override
     protected void writeDefinition(ByteBuf buffer, BedrockCodecHelper helper, DimensionDefinition definition) {
         super.writeDefinition(buffer, helper, definition);
-        helper.writeUuid(buffer, definition.getPackId());
+        helper.writeUuid(buffer, definition.packId());
     }
 
     @Override

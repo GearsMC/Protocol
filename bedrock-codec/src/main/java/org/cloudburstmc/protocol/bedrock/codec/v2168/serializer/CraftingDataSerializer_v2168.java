@@ -59,16 +59,16 @@ public class CraftingDataSerializer_v2168 extends CraftingDataSerializer_v748 {
     protected RecipeUnlockingRequirement readRequirement(ByteBuf buffer, BedrockCodecHelper helper, CraftingDataType type) {
         RecipeUnlockingRequirement requirement = new RecipeUnlockingRequirement(RecipeUnlockingRequirement.UnlockingContext.from(VarInts.readInt(buffer))); // docs said signed? but is unsigned?
         if (buffer.readBoolean()) {
-            helper.readArray(buffer, requirement.getIngredients(), (buf, h) -> h.readIngredient(buf));
+            helper.readArray(buffer, requirement.ingredients(), (buf, h) -> h.readIngredient(buf));
         }
         return requirement;
     }
 
     @Override
     protected void writeRequirement(ByteBuf buffer, BedrockCodecHelper helper, CraftingRecipeData data) {
-        VarInts.writeInt(buffer, data.getRequirement().getContext().ordinal());
-        helper.writeOptional(buffer, requirement-> requirement.getContext().equals(RecipeUnlockingRequirement.UnlockingContext.NONE), data.getRequirement(), (bb, hh, rr) ->
-                hh.writeArray(bb, rr.getIngredients(), (buf, h, ingredient) -> h.writeIngredient(buf, ingredient)));
+        VarInts.writeInt(buffer, data.getRequirement().context().ordinal());
+        helper.writeOptional(buffer, requirement-> requirement.context().equals(RecipeUnlockingRequirement.UnlockingContext.NONE), data.getRequirement(), (bb, hh, rr) ->
+                hh.writeArray(bb, rr.ingredients(), (buf, h, ingredient) -> h.writeIngredient(buf, ingredient)));
     }
 
     @Override

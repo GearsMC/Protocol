@@ -32,8 +32,8 @@ public class CreativeContentSerializer_v2168 extends CreativeContentSerializer_v
     }
 
     protected void writeCreativeGroup(ByteBuf buffer, BedrockCodecHelper helper, CreativeItemGroup item) {
-        buffer.writeByte(item.getCategory().ordinal());
-        helper.writeString(buffer, item.getName());
-        helper.writeItemInstance(buffer, item.getIcon());
+        buffer.writeByte(item.category().ordinal());
+        helper.writeString(buffer, item.name());
+        helper.writeItemInstance(buffer, item.icon());
     }
 }

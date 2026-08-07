@@ -239,7 +239,7 @@ public class BedrockCodecHelper_v2168 extends BedrockCodecHelper_v975 {
                     canBreak[i] = stream.readUTFMaxLen(this.encodingSettings.maxItemStackTagLength());
                 }
 
-                if (definition != null && BLOCKING_ID.equals(definition.getIdentifier())) {
+                if (definition != null && BLOCKING_ID.equals(definition.identifier())) {
                     blockingTicks = stream.readLong();
                 }
             } catch (IOException e) {
@@ -268,7 +268,7 @@ public class BedrockCodecHelper_v2168 extends BedrockCodecHelper_v975 {
     }
 
     @Override
-    public ItemData readNetworkItemStackDescriptor(ByteBuf buffer) { // cerealizer_NetworkItemStackDescriptor___SerializedData
+    public ItemData readNetItemDescriptor(ByteBuf buffer) { // cerealizer_NetworkItemStackDescriptor___SerializedData
         int runtimeId = buffer.readShortLE();
 
         ItemDefinition definition = runtimeId == 0 ? ItemDefinition.AIR : this.itemDefinitions.getDefinition(runtimeId);
@@ -323,7 +323,7 @@ public class BedrockCodecHelper_v2168 extends BedrockCodecHelper_v975 {
                     canBreak[i] = stream.readUTFMaxLen(this.encodingSettings.maxItemStackTagLength());
                 }
 
-                if (definition != null && BLOCKING_ID.equals(definition.getIdentifier())) {
+                if (definition != null && BLOCKING_ID.equals(definition.identifier())) {
                     blockingTicks = stream.readLong();
                 }
             } catch (IOException e) {
@@ -360,11 +360,11 @@ public class BedrockCodecHelper_v2168 extends BedrockCodecHelper_v975 {
         ItemDefinition definition = item.getDefinition();
         boolean air = isAir(definition);
 
-        VarInts.writeInt(buffer, air ? 0 : definition.getRuntimeId());
+        VarInts.writeInt(buffer, air ? 0 : definition.runtimeId());
         buffer.writeShortLE(item.getCount());
         VarInts.writeUnsignedInt(buffer, item.getDamage());
 
-        VarInts.writeInt(buffer, air || item.getBlockDefinition() == null ? 0 : item.getBlockDefinition().getRuntimeId());
+        VarInts.writeInt(buffer, air || item.getBlockDefinition() == null ? 0 : item.getBlockDefinition().runtimeId());
 
         if (air) {
             VarInts.writeUnsignedInt(buffer, 0);
@@ -392,7 +392,7 @@ public class BedrockCodecHelper_v2168 extends BedrockCodecHelper_v975 {
                     stream.writeUTF(aCanBreak);
                 }
 
-                if (BLOCKING_ID.equals(definition.getIdentifier())) {
+                if (BLOCKING_ID.equals(definition.identifier())) {
                     stream.writeLong(item.getBlockingTicks());
                 }
 
@@ -407,13 +407,13 @@ public class BedrockCodecHelper_v2168 extends BedrockCodecHelper_v975 {
     }
 
     @Override
-    public void writeNetworkItemStackDescriptor(ByteBuf buffer, ItemData item) {
+    public void writeNetItemDescriptor(ByteBuf buffer, ItemData item) {
         requireNonNull(item, "item is null!");
 
         ItemDefinition definition = item.getDefinition();
         boolean air = isAir(definition);
 
-        buffer.writeShortLE(air ? 0 : definition.getRuntimeId());
+        buffer.writeShortLE(air ? 0 : definition.runtimeId());
         buffer.writeShortLE(item.getCount());
         VarInts.writeUnsignedInt(buffer, item.getDamage());
 
@@ -422,7 +422,7 @@ public class BedrockCodecHelper_v2168 extends BedrockCodecHelper_v975 {
             VarInts.writeInt(buffer, item.getNetId());
         }
 
-        VarInts.writeUnsignedInt(buffer, air || item.getBlockDefinition() == null ? 0 : item.getBlockDefinition().getRuntimeId());
+        VarInts.writeUnsignedInt(buffer, air || item.getBlockDefinition() == null ? 0 : item.getBlockDefinition().runtimeId());
 
         if (air) {
             VarInts.writeUnsignedInt(buffer, 0);
@@ -450,7 +450,7 @@ public class BedrockCodecHelper_v2168 extends BedrockCodecHelper_v975 {
                     stream.writeUTF(aCanBreak);
                 }
 
-                if (BLOCKING_ID.equals(definition.getIdentifier())) {
+                if (BLOCKING_ID.equals(definition.identifier())) {
                     stream.writeLong(item.getBlockingTicks());
                 }
 
@@ -471,74 +471,74 @@ public class BedrockCodecHelper_v2168 extends BedrockCodecHelper_v975 {
         switch (action.getType()) {
             case TAKE:
             case PLACE:
-                byteBuf.writeByte(((TransferItemStackRequestAction) action).getCount());
-                writeStackRequestSlotInfo(byteBuf, ((TransferItemStackRequestAction) action).getSource());
-                writeStackRequestSlotInfo(byteBuf, ((TransferItemStackRequestAction) action).getDestination());
+                byteBuf.writeByte(((TransferItemStackRequestAction) action).count());
+                writeStackRequestSlotInfo(byteBuf, ((TransferItemStackRequestAction) action).source());
+                writeStackRequestSlotInfo(byteBuf, ((TransferItemStackRequestAction) action).destination());
                 break;
             case SWAP:
-                writeStackRequestSlotInfo(byteBuf, ((SwapAction) action).getSource());
-                writeStackRequestSlotInfo(byteBuf, ((SwapAction) action).getDestination());
+                writeStackRequestSlotInfo(byteBuf, ((SwapAction) action).source());
+                writeStackRequestSlotInfo(byteBuf, ((SwapAction) action).destination());
                 break;
             case DROP:
-                byteBuf.writeByte(((DropAction) action).getCount());
-                writeStackRequestSlotInfo(byteBuf, ((DropAction) action).getSource());
-                byteBuf.writeBoolean(((DropAction) action).isRandomly());
+                byteBuf.writeByte(((DropAction) action).count());
+                writeStackRequestSlotInfo(byteBuf, ((DropAction) action).source());
+                byteBuf.writeBoolean(((DropAction) action).randomly());
                 break;
             case DESTROY:
-                byteBuf.writeByte(((DestroyAction) action).getCount());
-                writeStackRequestSlotInfo(byteBuf, ((DestroyAction) action).getSource());
+                byteBuf.writeByte(((DestroyAction) action).count());
+                writeStackRequestSlotInfo(byteBuf, ((DestroyAction) action).source());
                 break;
             case CONSUME:
-                byteBuf.writeByte(((ConsumeAction) action).getCount());
-                writeStackRequestSlotInfo(byteBuf, ((ConsumeAction) action).getSource());
+                byteBuf.writeByte(((ConsumeAction) action).count());
+                writeStackRequestSlotInfo(byteBuf, ((ConsumeAction) action).source());
                 break;
             case CREATE:
-                byteBuf.writeByte(((CreateAction) action).getSlot());
+                byteBuf.writeByte(((CreateAction) action).slot());
                 break;
             case LAB_TABLE_COMBINE:
                 break;
             case BEACON_PAYMENT:
-                VarInts.writeInt(byteBuf, ((BeaconPaymentAction) action).getPrimaryEffect());
-                VarInts.writeInt(byteBuf, ((BeaconPaymentAction) action).getSecondaryEffect());
+                VarInts.writeInt(byteBuf, ((BeaconPaymentAction) action).primaryEffect());
+                VarInts.writeInt(byteBuf, ((BeaconPaymentAction) action).secondaryEffect());
                 break;
             case MINE_BLOCK:
-                VarInts.writeInt(byteBuf, ((MineBlockAction) action).getHotbarSlot());
-                VarInts.writeInt(byteBuf, ((MineBlockAction) action).getPredictedDurability());
-                byteBuf.writeIntLE(((MineBlockAction) action).getStackNetworkId()); // int
+                VarInts.writeInt(byteBuf, ((MineBlockAction) action).hotbarSlot());
+                VarInts.writeInt(byteBuf, ((MineBlockAction) action).predictedDurability());
+                byteBuf.writeIntLE(((MineBlockAction) action).stackNetworkId()); // int
                 break;
             case CRAFT_RECIPE:
-                VarInts.writeUnsignedInt(byteBuf, ((RecipeItemStackRequestAction) action).getRecipeNetworkId());
-                byteBuf.writeByte(((RecipeItemStackRequestAction) action).getNumberOfRequestedCrafts());
+                VarInts.writeUnsignedInt(byteBuf, ((RecipeItemStackRequestAction) action).recipeNetworkId());
+                byteBuf.writeByte(((RecipeItemStackRequestAction) action).numberOfRequestedCrafts());
                 break;
             case CRAFT_RECIPE_AUTO:
-                VarInts.writeUnsignedInt(byteBuf, ((AutoCraftRecipeAction) action).getRecipeNetworkId());
-                byteBuf.writeByte(((AutoCraftRecipeAction) action).getNumberOfRequestedCrafts()); // count duplication removed
-                List<ItemDescriptorWithCount> ingredients = ((AutoCraftRecipeAction) action).getIngredients();
+                VarInts.writeUnsignedInt(byteBuf, ((AutoCraftRecipeAction) action).recipeNetworkId());
+                byteBuf.writeByte(((AutoCraftRecipeAction) action).numberOfRequestedCrafts()); // count duplication removed
+                List<ItemDescriptorWithCount> ingredients = ((AutoCraftRecipeAction) action).ingredients();
                 byteBuf.writeByte(ingredients.size());
                 writeArray(byteBuf, ingredients, this::writeIngredient2);
                 break;
             case CRAFT_CREATIVE:
-                VarInts.writeUnsignedInt(byteBuf, ((CraftCreativeAction) action).getCreativeItemNetworkId());
-                byteBuf.writeByte(((CraftCreativeAction) action).getNumberOfRequestedCrafts());
+                VarInts.writeUnsignedInt(byteBuf, ((CraftCreativeAction) action).creativeItemNetworkId());
+                byteBuf.writeByte(((CraftCreativeAction) action).numberOfRequestedCrafts());
                 break;
             case CRAFT_RECIPE_OPTIONAL:
-                VarInts.writeUnsignedInt(byteBuf, ((CraftRecipeOptionalAction) action).getRecipeNetworkId());
-                byteBuf.writeIntLE(((CraftRecipeOptionalAction) action).getFilteredStringIndex());
+                VarInts.writeUnsignedInt(byteBuf, ((CraftRecipeOptionalAction) action).recipeNetworkId());
+                byteBuf.writeIntLE(((CraftRecipeOptionalAction) action).filteredStringIndex());
                 break;
             case CRAFT_REPAIR_AND_DISENCHANT:
-                byteBuf.writeIntLE(((CraftGrindstoneAction) action).getRecipeNetworkId()); // int
-                byteBuf.writeByte(((CraftGrindstoneAction) action).getNumberOfRequestedCrafts());
-                VarInts.writeInt(byteBuf, ((CraftGrindstoneAction) action).getRepairCost());
+                byteBuf.writeIntLE(((CraftGrindstoneAction) action).recipeNetworkId()); // int
+                byteBuf.writeByte(((CraftGrindstoneAction) action).numberOfRequestedCrafts());
+                VarInts.writeInt(byteBuf, ((CraftGrindstoneAction) action).repairCost());
                 break;
             case CRAFT_LOOM:
-                this.writeString(byteBuf, ((CraftLoomAction) action).getPatternId());
-                byteBuf.writeByte(((CraftLoomAction) action).getTimesCrafted());
+                this.writeString(byteBuf, ((CraftLoomAction) action).patternId());
+                byteBuf.writeByte(((CraftLoomAction) action).timesCrafted());
                 break;
             case CRAFT_NON_IMPLEMENTED_DEPRECATED:
                 break;
             case CRAFT_RESULTS_DEPRECATED:
-                this.writeArray(byteBuf, ((CraftResultsDeprecatedAction) action).getResultItems(), this::writeItemStackRequestNetworkItemInstanceDescriptor);
-                byteBuf.writeByte(((CraftResultsDeprecatedAction) action).getTimesCrafted());
+                this.writeArray(byteBuf, ((CraftResultsDeprecatedAction) action).resultItems(), this::writeItemStackRequestNetworkItemInstanceDescriptor);
+                byteBuf.writeByte(((CraftResultsDeprecatedAction) action).timesCrafted());
                 break;
             default:
                 throw new IllegalArgumentException("got " + action.getType());
@@ -640,7 +640,7 @@ public class BedrockCodecHelper_v2168 extends BedrockCodecHelper_v975 {
     protected ItemStackRequestSlotData readStackRequestSlotInfo(ByteBuf buffer) {
         FullContainerName containerName = this.readFullContainerName(buffer);
         return new ItemStackRequestSlotData(
-                containerName.getContainer(),
+                containerName.container(),
                 buffer.readUnsignedByte(),
                 buffer.readIntLE(),
                 containerName
@@ -649,19 +649,19 @@ public class BedrockCodecHelper_v2168 extends BedrockCodecHelper_v975 {
 
     @Override
     protected void writeStackRequestSlotInfo(ByteBuf buffer, ItemStackRequestSlotData data) {
-        this.writeFullContainerName(buffer, data.getContainerName());
-        buffer.writeByte(data.getSlot());
-        buffer.writeIntLE(data.getStackNetworkId());
+        this.writeFullContainerName(buffer, data.containerName());
+        buffer.writeByte(data.slot());
+        buffer.writeIntLE(data.stackNetworkId());
     }
 
     @Override
     public void writeItem(ByteBuf buffer, ItemData item) {
-        writeNetworkItemStackDescriptor(buffer, item);
+        writeNetItemDescriptor(buffer, item);
     }
 
     @Override
     public ItemData readItem(ByteBuf buffer) {
-        return readNetworkItemStackDescriptor(buffer);
+        return readNetItemDescriptor(buffer);
     }
 
     @Override
@@ -788,10 +788,10 @@ public class BedrockCodecHelper_v2168 extends BedrockCodecHelper_v975 {
 
     @Override
     public void writeAnimationData(ByteBuf buffer, AnimationData animation) {
-        this.writeImage(buffer, animation.getImage());
-        VarInts.writeUnsignedInt(buffer, animation.getTextureType().ordinal());
-        buffer.writeFloatLE(animation.getFrames());
-        VarInts.writeUnsignedInt(buffer, animation.getExpressionType().ordinal());
+        this.writeImage(buffer, animation.image());
+        VarInts.writeUnsignedInt(buffer, animation.textureType().ordinal());
+        buffer.writeFloatLE(animation.frames());
+        VarInts.writeUnsignedInt(buffer, animation.expressionType().ordinal());
     }
 
     @Override
@@ -814,16 +814,16 @@ public class BedrockCodecHelper_v2168 extends BedrockCodecHelper_v975 {
 
     @Override
     public void writeItemStackRequest(ByteBuf buffer, ItemStackRequest request) {
-        VarInts.writeInt(buffer, request.getRequestId());
+        VarInts.writeInt(buffer, request.requestId());
 
-        this.writeArray(buffer, request.getActions(), (byteBuf, action) -> {
+        this.writeArray(buffer, request.actions(), (byteBuf, action) -> {
             VarInts.writeUnsignedInt(byteBuf, this.stackRequestActionTypes.getId(action.getType()));
             writeRequestActionData(byteBuf, action);
         });
 
-        this.writeArray(buffer, request.getFilterStrings(), this::writeString);
+        this.writeArray(buffer, request.filterStrings(), this::writeString);
 
-        TextProcessingEventOrigin origin = request.getTextProcessingEventOrigin();
+        TextProcessingEventOrigin origin = request.textProcessingEventOrigin();
         buffer.writeIntLE(origin == null ? -1 : this.textProcessingEventOrigins.getId(origin));
     }
 
@@ -871,38 +871,38 @@ public class BedrockCodecHelper_v2168 extends BedrockCodecHelper_v975 {
 
     @Override
     public void writeIngredient(ByteBuf buffer, ItemDescriptorWithCount ingredient) {
-        VarInts.writeUnsignedInt(buffer, Math.min(ingredient.getDescriptor().getType().ordinal(), 1));
-        this.writeItemDescriptor(buffer, ingredient.getDescriptor());
-        VarInts.writeInt(buffer, ingredient.getCount());
+        VarInts.writeUnsignedInt(buffer, Math.min(ingredient.descriptor().getType().ordinal(), 1));
+        this.writeItemDescriptor(buffer, ingredient.descriptor());
+        VarInts.writeInt(buffer, ingredient.count());
     }
 
     protected void writeIngredient2(ByteBuf buffer, ItemDescriptorWithCount ingredient) {
-        VarInts.writeUnsignedInt(buffer, ingredient.getDescriptor().getType().ordinal());
+        VarInts.writeUnsignedInt(buffer, ingredient.descriptor().getType().ordinal());
 
-        buffer.writeByte(ingredient.getDescriptor().getType().ordinal());
+        buffer.writeByte(ingredient.descriptor().getType().ordinal());
 
-        switch (ingredient.getDescriptor().getType()) {
+        switch (ingredient.descriptor().getType()) {
             case INVALID:
                 break;
             case DEFAULT:
-                DefaultDescriptor defaultDescriptor = (DefaultDescriptor) ingredient.getDescriptor();
-                this.writeString(buffer, defaultDescriptor.getItemId().getIdentifier());
-                VarInts.writeInt(buffer, defaultDescriptor.getAuxValue());
+                DefaultDescriptor defaultDescriptor = (DefaultDescriptor) ingredient.descriptor();
+                this.writeString(buffer, defaultDescriptor.itemId().identifier());
+                VarInts.writeInt(buffer, defaultDescriptor.auxValue());
                 break;
             case MOLANG:
-                MolangDescriptor molangDescriptor = (MolangDescriptor) ingredient.getDescriptor();
-                this.writeString(buffer, molangDescriptor.getTagExpression());
-                buffer.writeShortLE(molangDescriptor.getMolangVersion());
+                MolangDescriptor molangDescriptor = (MolangDescriptor) ingredient.descriptor();
+                this.writeString(buffer, molangDescriptor.tagExpression());
+                buffer.writeShortLE(molangDescriptor.molangVersion());
                 break;
             case ITEM_TAG:
-                ItemTagDescriptor tagDescriptor = (ItemTagDescriptor) ingredient.getDescriptor();
-                this.writeString(buffer, tagDescriptor.getItemTag());
+                ItemTagDescriptor tagDescriptor = (ItemTagDescriptor) ingredient.descriptor();
+                this.writeString(buffer, tagDescriptor.itemTag());
                 break;
             default:
                 throw new UnsupportedOperationException("ItemDescriptorType");
         }
 
-        buffer.writeShortLE(ingredient.getCount());
+        buffer.writeShortLE(ingredient.count());
     }
 
     @Override
@@ -953,17 +953,17 @@ public class BedrockCodecHelper_v2168 extends BedrockCodecHelper_v975 {
                 break;
             case DEFAULT:
                 DefaultDescriptor defaultDescriptor = (DefaultDescriptor) descriptor;
-                this.writeString(buffer, defaultDescriptor.getItemId().getIdentifier());
-                VarInts.writeInt(buffer, defaultDescriptor.getAuxValue());
+                this.writeString(buffer, defaultDescriptor.itemId().identifier());
+                VarInts.writeInt(buffer, defaultDescriptor.auxValue());
                 break;
             case MOLANG:
                 MolangDescriptor molangDescriptor = (MolangDescriptor) descriptor;
-                this.writeString(buffer, molangDescriptor.getTagExpression());
-                buffer.writeShortLE(molangDescriptor.getMolangVersion());
+                this.writeString(buffer, molangDescriptor.tagExpression());
+                buffer.writeShortLE(molangDescriptor.molangVersion());
                 break;
             case ITEM_TAG:
                 ItemTagDescriptor tagDescriptor = (ItemTagDescriptor) descriptor;
-                this.writeString(buffer, tagDescriptor.getItemTag());
+                this.writeString(buffer, tagDescriptor.itemTag());
                 VarInts.writeInt(buffer, 32767);
                 break;
             default:
@@ -988,9 +988,10 @@ public class BedrockCodecHelper_v2168 extends BedrockCodecHelper_v975 {
         int integritySeed = buffer.readIntLE();
         Vector3f pivot = this.readVector3f(buffer);
 
-        return new StructureSettings(paletteName, ignoringEntities, ignoringBlocks,
-                nonTickingPlayersAndTickingAreasEnabled, size, offset, lastEditedByEntityId, rotation, mirror,
-                animationMode, animationSeconds, integrityValue, integritySeed, pivot);
+        // Fork'un record bilesen sirasi Cloudburst'unkinden farkli.
+        return new StructureSettings(ignoringEntities, ignoringBlocks, size, offset, rotation, mirror,
+                integrityValue, integritySeed, paletteName, lastEditedByEntityId, pivot,
+                animationMode, animationSeconds, nonTickingPlayersAndTickingAreasEnabled);
     }
 
     @Override
@@ -1036,8 +1037,8 @@ public class BedrockCodecHelper_v2168 extends BedrockCodecHelper_v975 {
             descriptor = new DefaultDescriptor(definition, aux);
         }
 
-        ItemDefinition definition = descriptor == InvalidDescriptor.INSTANCE ? ItemData.AIR.getDefinition() : ((DefaultDescriptor) descriptor).getItemId();
-        int aux = descriptor == InvalidDescriptor.INSTANCE ? 0 : ((DefaultDescriptor) descriptor).getAuxValue();
+        ItemDefinition definition = descriptor == InvalidDescriptor.INSTANCE ? ItemData.AIR.getDefinition() : ((DefaultDescriptor) descriptor).itemId();
+        int aux = descriptor == InvalidDescriptor.INSTANCE ? 0 : ((DefaultDescriptor) descriptor).auxValue();
 
         int count = buffer.readShortLE();
 
@@ -1078,7 +1079,7 @@ public class BedrockCodecHelper_v2168 extends BedrockCodecHelper_v975 {
                     canBreak[i] = stream.readUTFMaxLen(this.encodingSettings.maxItemStackTagLength());
                 }
 
-                if (definition != null && BLOCKING_ID.equals(definition.getIdentifier())) {
+                if (definition != null && BLOCKING_ID.equals(definition.identifier())) {
                     blockingTicks = stream.readLong();
                 }
             } catch (IOException e) {
@@ -1102,7 +1103,7 @@ public class BedrockCodecHelper_v2168 extends BedrockCodecHelper_v975 {
                 .canPlace(canPlace)
                 .canBreak(canBreak)
                 .blockingTicks(blockingTicks)
-                .blockDefinition(definition.getRuntimeId() == 0 ? ItemData.AIR.getBlockDefinition() : this.blockDefinitions.getDefinition(blockRuntimeId))
+                .blockDefinition(definition.runtimeId() == 0 ? ItemData.AIR.getBlockDefinition() : this.blockDefinitions.getDefinition(blockRuntimeId))
                 .build();
     }
 
@@ -1115,13 +1116,13 @@ public class BedrockCodecHelper_v2168 extends BedrockCodecHelper_v975 {
         VarInts.writeUnsignedInt(buffer, air ? 0 : 1); //descriptor type
         buffer.writeByte(air ? 0 : 1); // type again
         if (!air) {
-            this.writeString(buffer, definition.getIdentifier());
+            this.writeString(buffer, definition.identifier());
             VarInts.writeInt(buffer, item.getDamage());
         }
 
         buffer.writeShortLE(item.getCount());
 
-        VarInts.writeUnsignedInt(buffer, air || item.getBlockDefinition() == null ? 0 : item.getBlockDefinition().getRuntimeId());
+        VarInts.writeUnsignedInt(buffer, air || item.getBlockDefinition() == null ? 0 : item.getBlockDefinition().runtimeId());
 
         if (air) {
             VarInts.writeUnsignedInt(buffer, 0);
@@ -1149,7 +1150,7 @@ public class BedrockCodecHelper_v2168 extends BedrockCodecHelper_v975 {
                     stream.writeUTF(aCanBreak);
                 }
 
-                if (BLOCKING_ID.equals(definition.getIdentifier())) {
+                if (BLOCKING_ID.equals(definition.identifier())) {
                     stream.writeLong(item.getBlockingTicks());
                 }
 
@@ -1220,14 +1221,14 @@ public class BedrockCodecHelper_v2168 extends BedrockCodecHelper_v975 {
     public void writeSource(ByteBuf buffer, InventorySource inventorySource) {
         requireNonNull(inventorySource, "InventorySource was null");
 
-        VarInts.writeUnsignedInt(buffer, inventorySource.getType().id());
+        VarInts.writeUnsignedInt(buffer, inventorySource.type().id());
 
         buffer.writeBoolean(true);
-        switch (inventorySource.getType()) {
+        switch (inventorySource.type()) {
             case CONTAINER:
             case NON_IMPLEMENTED_TODO:
                 buffer.writeBoolean(true);
-                buffer.writeByte(inventorySource.getContainerId());
+                buffer.writeByte(inventorySource.containerId());
                 break;
             default:
                 buffer.writeBoolean(false);
@@ -1235,10 +1236,10 @@ public class BedrockCodecHelper_v2168 extends BedrockCodecHelper_v975 {
         }
 
         buffer.writeBoolean(true);
-        switch (inventorySource.getType()) {
+        switch (inventorySource.type()) {
             case WORLD_INTERACTION:
                 buffer.writeBoolean(true);
-                VarInts.writeUnsignedInt(buffer, inventorySource.getFlag().ordinal());
+                VarInts.writeUnsignedInt(buffer, inventorySource.flag().ordinal());
                 break;
             default:
                 buffer.writeBoolean(false);

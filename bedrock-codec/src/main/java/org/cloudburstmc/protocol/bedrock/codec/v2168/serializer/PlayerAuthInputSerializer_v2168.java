@@ -132,8 +132,8 @@ public class PlayerAuthInputSerializer_v2168 extends PlayerAuthInputSerializer_v
         if (legacyRequestId < -1 && (legacyRequestId & 1) == 0) {
             buffer.writeBoolean(true);
             helper.writeArray(buffer, transaction.getLegacySlots(), (buf, packetHelper, data) -> {
-                buf.writeByte(data.getContainerId());
-                packetHelper.writeByteArray(buf, data.getSlots());
+                buf.writeByte(data.containerId());
+                packetHelper.writeByteArray(buf, data.slots());
             });
         } else {
             buffer.writeBoolean(false);
@@ -151,7 +151,7 @@ public class PlayerAuthInputSerializer_v2168 extends PlayerAuthInputSerializer_v
         helper.writeItem(buffer, transaction.getItemInHand());
         helper.writeVector3f(buffer, transaction.getPlayerPosition());
         helper.writeVector3f(buffer, transaction.getClickPosition());
-        VarInts.writeUnsignedInt(buffer, transaction.getBlockDefinition().getRuntimeId());
+        VarInts.writeUnsignedInt(buffer, transaction.getBlockDefinition().runtimeId());
         buffer.writeByte(transaction.getClientInteractPrediction().ordinal());
 
         buffer.writeByte(transaction.getClientCooldownState());

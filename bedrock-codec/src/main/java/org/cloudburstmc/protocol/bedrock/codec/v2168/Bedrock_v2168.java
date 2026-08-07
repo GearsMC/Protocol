@@ -104,7 +104,7 @@ public class Bedrock_v2168 extends Bedrock_v1001 {
             .updateSerializer(ResourcePacksInfoPacket.class, ResourcePacksInfoSerializer_v2168.INSTANCE)
             .updateSerializer(SetScorePacket.class, SetScoreSerializer_v2168.INSTANCE)
             .updateSerializer(SetScoreboardIdentityPacket.class, SetScoreboardIdentitySerializer_v2168.INSTANCE)
-            .updateSerializer(ServerboundDiagnosticsPacket.class, ServerboundDiagnosticsSerializer_v2168.INSTANCE)
+            .updateSerializer(ServerboundDiagnosticsPacket.class, new ServerboundDiagnosticsSerializer_v2168(MEMORY_CATEGORY_TYPES))
             .updateSerializer(StartGamePacket.class, StartGameSerializer_v2168.INSTANCE)
             .updateSerializer(StructureBlockUpdatePacket.class, StructureBlockUpdateSerializer_v2168.INSTANCE)
             .updateSerializer(SubChunkPacket.class, SubChunkSerializer_v2168.INSTANCE)

@@ -18,8 +18,8 @@ public class SetScoreboardIdentitySerializer_v2168 extends SetScoreboardIdentity
         Action action = packet.getAction();
         buffer.writeByte(action.ordinal());
         helper.writeArray(buffer, packet.getEntries(), (buf, entry) -> {
-            VarInts.writeLong(buffer, entry.getScoreboardId());
-            helper.writeOptional(buffer, o-> action == Action.ADD, entry.getPlayerId(), VarInts::writeLong);
+            VarInts.writeLong(buffer, entry.scoreboardId());
+            helper.writeOptional(buffer, o-> action == Action.ADD, entry.playerId(), VarInts::writeLong);
         });
     }
 

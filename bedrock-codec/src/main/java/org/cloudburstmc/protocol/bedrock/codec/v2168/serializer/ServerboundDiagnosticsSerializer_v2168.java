@@ -3,13 +3,17 @@ package org.cloudburstmc.protocol.bedrock.codec.v2168.serializer;
 import io.netty.buffer.ByteBuf;
 import org.cloudburstmc.protocol.bedrock.codec.BedrockCodecHelper;
 import org.cloudburstmc.protocol.bedrock.codec.v975.serializer.ServerboundDiagnosticsSerializer_v975;
+import org.cloudburstmc.protocol.bedrock.data.MemoryCategoryCounter;
 import org.cloudburstmc.protocol.bedrock.data.diagnostics.SystemCategory;
+import org.cloudburstmc.protocol.bedrock.util.TypeMap;
 import org.cloudburstmc.protocol.bedrock.data.diagnostics.WhiskerScopeDataSummary;
 import org.cloudburstmc.protocol.bedrock.packet.ServerboundDiagnosticsPacket;
 
 public class ServerboundDiagnosticsSerializer_v2168 extends ServerboundDiagnosticsSerializer_v975 { // 975 intentional, system before whisker
 
-    public static final ServerboundDiagnosticsSerializer_v2168 INSTANCE = new ServerboundDiagnosticsSerializer_v2168();
+    public ServerboundDiagnosticsSerializer_v2168(TypeMap<MemoryCategoryCounter.Category> memoryCategoryTypes) {
+        super(memoryCategoryTypes);
+    }
 
     @Override
     public void serialize(ByteBuf buffer, BedrockCodecHelper helper, ServerboundDiagnosticsPacket packet) {
@@ -21,11 +25,11 @@ public class ServerboundDiagnosticsSerializer_v2168 extends ServerboundDiagnosti
         }));
 
         helper.writeArray(buffer, packet.getWhiskerScopes(), ((buf, h, info) -> {
-            helper.writeString(buf, info.getLabel());
-            helper.writeString(buf, info.getIndentation());
-            buf.writeLongLE(info.getTotalHighCostNS());
-            buf.writeLongLE(info.getTotalMidCostNS());
-            buf.writeLongLE(info.getTotalLowCostNS());
+            helper.writeString(buf, info.label());
+            helper.writeString(buf, info.indentation());
+            buf.writeLongLE(info.totalHighCostNS());
+            buf.writeLongLE(info.totalMidCostNS());
+            buf.writeLongLE(info.totalLowCostNS());
         }));
     }
 

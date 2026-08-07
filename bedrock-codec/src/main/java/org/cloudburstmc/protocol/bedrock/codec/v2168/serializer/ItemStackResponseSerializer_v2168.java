@@ -20,17 +20,17 @@ public class ItemStackResponseSerializer_v2168 extends ItemStackResponseSerializ
     @Override
     public void serialize(ByteBuf buffer, BedrockCodecHelper helper, ItemStackResponsePacket packet) {
         helper.writeArray(buffer, packet.getEntries(), (buf, response) -> {
-            buf.writeByte(response.getResult().ordinal());
-            VarInts.writeInt(buffer, response.getRequestId());
+            buf.writeByte(response.result().ordinal());
+            VarInts.writeInt(buffer, response.requestId());
 
             buf.writeBoolean(true);
-            if (response.getContainers().isEmpty()) {
+            if (response.containers().isEmpty()) {
                 buf.writeBoolean(false);
                 return;
             }
 
             buf.writeBoolean(true);
-            helper.writeArray(buf, response.getContainers(), helper::writeItemStackResponseContainer);
+            helper.writeArray(buf, response.containers(), helper::writeItemStackResponseContainer);
         });
     }
 

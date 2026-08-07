@@ -23,19 +23,20 @@ public class StructureBlockUpdateSerializer_v2168 extends StructureBlockUpdateSe
         StructureBlockType type = StructureBlockType.from(VarInts.readInt(buffer));
         StructureSettings settings = helper.readStructureSettings(buffer);
         StructureRedstoneSaveMode redstoneSaveMode = StructureRedstoneSaveMode.from(buffer.readUnsignedByte());
-        return new StructureEditorData(name, filteredName, dataField, includingPlayers, boundingBoxVisible, type, settings,
-                redstoneSaveMode);
+        // Fork'un record bilesen sirasi Cloudburst'unkinden farkli.
+        return new StructureEditorData(name, includingPlayers, boundingBoxVisible, type, settings, dataField,
+                redstoneSaveMode, filteredName);
     }
 
     @Override
     protected void writeEditorData(ByteBuf buffer, BedrockCodecHelper helper, StructureEditorData data) {
-        helper.writeString(buffer, data.getName());
-        helper.writeString(buffer, data.getFilteredName());
-        helper.writeString(buffer, data.getDataField());
-        buffer.writeBoolean(data.isIncludingPlayers());
-        buffer.writeBoolean(data.isBoundingBoxVisible());
-        VarInts.writeInt(buffer, data.getType().ordinal());
-        helper.writeStructureSettings(buffer, data.getSettings());
-        buffer.writeByte(data.getRedstoneSaveMode().ordinal());
+        helper.writeString(buffer, data.name());
+        helper.writeString(buffer, data.filteredName());
+        helper.writeString(buffer, data.dataField());
+        buffer.writeBoolean(data.includingPlayers());
+        buffer.writeBoolean(data.boundingBoxVisible());
+        VarInts.writeInt(buffer, data.type().ordinal());
+        helper.writeStructureSettings(buffer, data.settings());
+        buffer.writeByte(data.redstoneSaveMode().ordinal());
     }
 }
