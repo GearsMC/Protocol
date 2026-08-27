@@ -83,6 +83,11 @@ public class MoveEntityDeltaPacket implements BedrockPacket {
     private boolean forceMoveLocalEntity;
     private boolean forceCompletion;
 
+    /**
+     * @since v2192
+     */
+    private long ticks;
+
     @Override
     public final PacketSignal handle(BedrockPacketHandler handler) {
         return handler.handle(this);

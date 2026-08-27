@@ -255,6 +255,8 @@ public record BedrockPacketType(String name) {
     public static final BedrockPacketType CLIENTBOUND_UPDATE_SOUND_DATA = new BedrockPacketType("CLIENTBOUND_UPDATE_SOUND_DATA");
     public static final BedrockPacketType SEND_PARTY_DESTINATION_COOKIE = new BedrockPacketType("SEND_PARTY_DESTINATION_COOKIE");
     public static final BedrockPacketType PARTY_DESTINATION_COOKIE_RESPONSE = new BedrockPacketType("PARTY_DESTINATION_COOKIE_RESPONSE");
+    public static final BedrockPacketType SET_PLAYER_FURNACE_OPTIONS = new BedrockPacketType("SET_PLAYER_FURNACE_OPTIONS");
+    public static final BedrockPacketType RECORD_STARTED = new BedrockPacketType("RECORD_STARTED");
     public static final BedrockPacketType CONFIRM_SKIN = new BedrockPacketType("CONFIRM_SKIN");
     public static final BedrockPacketType NET_EASE_JSON = new BedrockPacketType("NET_EASE_JSON");
     public static final BedrockPacketType PY_RPC = new BedrockPacketType("PY_RPC");

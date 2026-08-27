@@ -14,16 +14,22 @@ import java.util.UUID;
  * @param dimensionType the numeric dimension type sent by modern codecs
  * @param packId        the resource pack the dimension originates from, {@code null} on codecs
  *                      before v2168
+ * @param defaultBiome  boyutun varsayılan biyomu (v2192'den beri); daha eski kodeklerde {@code null}
  */
 public record DimensionDefinition(String id, int maximumHeight, int minimumHeight, int generatorType,
-                                  int dimensionType, UUID packId) {
+                                  int dimensionType, UUID packId, String defaultBiome) {
 
     public DimensionDefinition(String id, int maximumHeight, int minimumHeight, int generatorType) {
-        this(id, maximumHeight, minimumHeight, generatorType, 0, null);
+        this(id, maximumHeight, minimumHeight, generatorType, 0, null, null);
     }
 
     public DimensionDefinition(String id, int maximumHeight, int minimumHeight, int generatorType,
                                int dimensionType) {
-        this(id, maximumHeight, minimumHeight, generatorType, dimensionType, null);
+        this(id, maximumHeight, minimumHeight, generatorType, dimensionType, null, null);
+    }
+
+    public DimensionDefinition(String id, int maximumHeight, int minimumHeight, int generatorType,
+                               int dimensionType, UUID packId) {
+        this(id, maximumHeight, minimumHeight, generatorType, dimensionType, packId, null);
     }
 }
