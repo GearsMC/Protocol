@@ -28,6 +28,7 @@ import org.cloudburstmc.protocol.bedrock.packet.PrimitiveShapesPacket;
 import org.cloudburstmc.protocol.bedrock.packet.ServerboundDiagnosticsPacket;
 import org.cloudburstmc.protocol.bedrock.packet.SetPlayerFurnaceOptionsPacket;
 import org.cloudburstmc.protocol.bedrock.util.OptionalBoolean;
+import org.cloudburstmc.protocol.bedrock.util.VarInts;
 import org.junit.jupiter.api.Test;
 
 import java.awt.Color;
@@ -130,6 +131,29 @@ class Bedrock_v2192RoundTripTest {
                 UUID.fromString("5f0a8c3e-1d2b-4c5e-9f00-112233445566"), "minecraft:plains"));
 
         assertEquals(packet, roundTrip(Bedrock_v2192.CODEC, packet));
+    }
+
+    /**
+     * Mojang şeması v2192'de tanımın ilk iki alanını "Minimum Y" ve "Height Range" yaptı; upstream eski
+     * sırayla (en yüksek, en alçak) yazıyordu. Gidiş-dönüş testi bunu yakalayamaz, çünkü okuma da aynı
+     * sırayla yapılırsa değerler yine yerine oturur; bu yüzden ham baytlar okunur.
+     */
+    @Test
+    void dimensionDefinitionWritesMinimumYThenHeightRange() throws Exception {
+        var packet = new DimensionDataPacket();
+        packet.getDefinitions().add(new DimensionDefinition("gears:ada", 320, -64, 1, 0,
+                UUID.fromString("5f0a8c3e-1d2b-4c5e-9f00-112233445566"), "minecraft:plains"));
+        var helper = Bedrock_v2192.CODEC.createHelper();
+        ByteBuf buf = Unpooled.buffer();
+        try {
+            Bedrock_v2192.CODEC.tryEncode(helper, buf, packet);
+            assertEquals(1, VarInts.readUnsignedInt(buf));
+            assertEquals("gears:ada", helper.readString(buf));
+            assertEquals(-64, VarInts.readInt(buf), "ilk alan en alçak Y olmalı");
+            assertEquals(384, VarInts.readInt(buf), "ikinci alan yükseklik aralığı olmalı");
+        } finally {
+            buf.release();
+        }
     }
 
     @Test
