@@ -6,7 +6,7 @@ import org.cloudburstmc.protocol.bedrock.codec.v1001.serializer.InventoryTransac
 import org.cloudburstmc.protocol.bedrock.data.inventory.ItemData;
 import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.*;
 import org.cloudburstmc.protocol.bedrock.packet.InventoryTransactionPacket;
-import org.cloudburstmc.protocol.common.util.VarInts;
+import org.cloudburstmc.protocol.bedrock.util.VarInts;
 
 import java.util.List;
 
@@ -22,8 +22,8 @@ public class InventoryTransactionSerializer_v2192 extends InventoryTransactionSe
         if (legacyRequestId < -1 && (legacyRequestId & 1) == 0) {
             buffer.writeBoolean(true);
             helper.writeArray(buffer, packet.getLegacySlots(), (buf, packetHelper, data) -> {
-                buf.writeByte(data.getContainerId());
-                packetHelper.writeByteArray(buf, data.getSlots());
+                buf.writeByte(data.containerId());
+                packetHelper.writeByteArray(buf, data.slots());
             });
         } else {
             buffer.writeBoolean(false);
@@ -88,10 +88,10 @@ public class InventoryTransactionSerializer_v2192 extends InventoryTransactionSe
         buffer.writeByte(packet.getBlockFace());
         VarInts.writeInt(buffer, packet.getHotbarSlot());
         buffer.writeByte(packet.getHand()); // new
-        helper.writeNetworkItemStackDescriptor(buffer, packet.getItemInHand());
+        helper.writeNetItemDescriptor(buffer, packet.getItemInHand());
         helper.writeVector3f(buffer, packet.getPlayerPosition());
         helper.writeVector3f(buffer, packet.getClickPosition());
-        VarInts.writeUnsignedInt(buffer, packet.getBlockDefinition().getRuntimeId());
+        VarInts.writeUnsignedInt(buffer, packet.getBlockDefinition().runtimeId());
         buffer.writeByte(packet.getClientInteractPrediction().ordinal());
         buffer.writeByte(packet.getClientCooldownState());
     }
@@ -104,7 +104,7 @@ public class InventoryTransactionSerializer_v2192 extends InventoryTransactionSe
         packet.setBlockFace(buffer.readUnsignedByte());
         packet.setHotbarSlot(VarInts.readInt(buffer));
         packet.setHand(buffer.readUnsignedByte()); // new
-        packet.setItemInHand(helper.readNetworkItemStackDescriptor(buffer));
+        packet.setItemInHand(helper.readNetItemDescriptor(buffer));
         packet.setPlayerPosition(helper.readVector3f(buffer));
         packet.setClickPosition(helper.readVector3f(buffer));
         packet.setBlockDefinition(helper.getBlockDefinitions().getDefinition(VarInts.readUnsignedInt(buffer)));
@@ -117,8 +117,8 @@ public class InventoryTransactionSerializer_v2192 extends InventoryTransactionSe
         helper.readArray(buffer, actions, (buf, h) -> {
             InventorySource source = helper.readSource(buf);
             int slot = VarInts.readUnsignedInt(buf);
-            ItemData fromItem = h.readNetworkItemStackDescriptor(buf);
-            ItemData toItem = h.readNetworkItemStackDescriptor(buf);
+            ItemData fromItem = h.readNetItemDescriptor(buf);
+            ItemData toItem = h.readNetItemDescriptor(buf);
 
             return new InventoryActionData(source, slot, fromItem, toItem);
         }, helper.getEncodingSettings().maxInventoryActionsOrRequests());
@@ -127,10 +127,10 @@ public class InventoryTransactionSerializer_v2192 extends InventoryTransactionSe
     @Override
     public void writeInventoryActions(ByteBuf buffer, BedrockCodecHelper helper, List<InventoryActionData> actions) {
         helper.writeArray(buffer, actions, (buf, h, action) -> {
-            helper.writeSource(buf, action.getSource());
-            VarInts.writeUnsignedInt(buf, action.getSlot());
-            h.writeNetworkItemStackDescriptor(buf, action.getFromItem());
-            h.writeNetworkItemStackDescriptor(buf, action.getToItem());
+            helper.writeSource(buf, action.source());
+            VarInts.writeUnsignedInt(buf, action.slot());
+            h.writeNetItemDescriptor(buf, action.fromItem());
+            h.writeNetItemDescriptor(buf, action.toItem());
         });
     }
 }

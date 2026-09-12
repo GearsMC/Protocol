@@ -164,28 +164,25 @@ public class CameraPreset {
     @Nullable
     private Vector2f startingRotation;
 
+    /**
+     * v2192 öncesi alanlarla kurar; {@code applyInheritedStartingRotation} {@code false},
+     * {@code startingRotation} {@code null} olur.
+     * <p>
+     * Parametreler fork'un alan sırasındadır. Upstream'deki eşdeğer kurucu başka sırada
+     * (viewOffset, radius ve yaw sınırları önde); o sıra alınsaydı v618–v818 serializer'larının
+     * mevcut çağrıları derlenmez, aynı tipteki alanlarda ise sessizce yer değiştirirdi.
+     */
     @Deprecated
-    public CameraPreset(String identifier, String parentPreset, Vector3f pos, Float yaw, Float pitch, Vector2f viewOffset, Float radius, Float minYawLimit, Float maxYawLimit, CameraAudioListener listener, OptionalBoolean playEffect, Float rotationSpeed, OptionalBoolean snapToTarget, Vector3f entityOffset, Vector2f horizontalRotationLimit, Vector2f verticalRotationLimit, OptionalBoolean continueTargeting, OptionalBoolean alignTargetAndCameraForward, Float blockListeningRadius, CameraAimAssistPreset aimAssistPreset, ControlScheme controlScheme) {
-        this.identifier = identifier;
-        this.parentPreset = parentPreset;
-        this.pos = pos;
-        this.yaw = yaw;
-        this.pitch = pitch;
-        this.viewOffset = viewOffset;
-        this.radius = radius;
-        this.minYawLimit = minYawLimit;
-        this.maxYawLimit = maxYawLimit;
-        this.listener = listener;
-        this.playEffect = playEffect;
-        this.rotationSpeed = rotationSpeed;
-        this.snapToTarget = snapToTarget;
-        this.entityOffset = entityOffset;
-        this.horizontalRotationLimit = horizontalRotationLimit;
-        this.verticalRotationLimit = verticalRotationLimit;
-        this.continueTargeting = continueTargeting;
-        this.alignTargetAndCameraForward = alignTargetAndCameraForward;
-        this.blockListeningRadius = blockListeningRadius;
-        this.aimAssistPreset = aimAssistPreset;
-        this.controlScheme = controlScheme;
+    public CameraPreset(String identifier, String parentPreset, Vector3f pos, Float yaw, Float pitch,
+                        CameraAudioListener listener, OptionalBoolean playEffect, Vector2f viewOffset, Float radius,
+                        Float rotationSpeed, OptionalBoolean snapToTarget, Vector3f entityOffset,
+                        Vector2f horizontalRotationLimit, Vector2f verticalRotationLimit,
+                        OptionalBoolean continueTargeting, OptionalBoolean alignTargetAndCameraForward,
+                        Float blockListeningRadius, CameraAimAssistPreset aimAssistPreset, Float minYawLimit,
+                        Float maxYawLimit, ControlScheme controlScheme) {
+        this(identifier, parentPreset, pos, yaw, pitch, listener, playEffect, viewOffset, radius, rotationSpeed,
+                snapToTarget, entityOffset, horizontalRotationLimit, verticalRotationLimit, continueTargeting,
+                alignTargetAndCameraForward, blockListeningRadius, aimAssistPreset, minYawLimit, maxYawLimit,
+                controlScheme, false, null);
     }
 }

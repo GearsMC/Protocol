@@ -11,7 +11,7 @@ import org.cloudburstmc.protocol.bedrock.data.PlayerBlockActionData;
 import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.ItemUseTransaction;
 import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.LegacySetItemSlotData;
 import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket;
-import org.cloudburstmc.protocol.common.util.VarInts;
+import org.cloudburstmc.protocol.bedrock.util.VarInts;
 
 public class PlayerAuthInputSerializer_v2192 extends PlayerAuthInputSerializer_v944 {
 
@@ -124,8 +124,8 @@ public class PlayerAuthInputSerializer_v2192 extends PlayerAuthInputSerializer_v
         if (legacyRequestId < -1 && (legacyRequestId & 1) == 0) {
             buffer.writeBoolean(true);
             helper.writeArray(buffer, transaction.getLegacySlots(), (buf, packetHelper, data) -> {
-                buf.writeByte(data.getContainerId());
-                packetHelper.writeByteArray(buf, data.getSlots());
+                buf.writeByte(data.containerId());
+                packetHelper.writeByteArray(buf, data.slots());
             });
         } else {
             buffer.writeBoolean(false);
@@ -141,7 +141,7 @@ public class PlayerAuthInputSerializer_v2192 extends PlayerAuthInputSerializer_v
         helper.writeItem(buffer, transaction.getItemInHand());
         helper.writeVector3f(buffer, transaction.getPlayerPosition());
         helper.writeVector3f(buffer, transaction.getClickPosition());
-        VarInts.writeUnsignedInt(buffer, transaction.getBlockDefinition().getRuntimeId());
+        VarInts.writeUnsignedInt(buffer, transaction.getBlockDefinition().runtimeId());
         buffer.writeByte(transaction.getClientInteractPrediction().ordinal());
 
         buffer.writeByte(transaction.getClientCooldownState());

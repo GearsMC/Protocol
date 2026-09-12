@@ -5,7 +5,7 @@ import org.cloudburstmc.protocol.bedrock.codec.BedrockCodecHelper;
 import org.cloudburstmc.protocol.bedrock.codec.v1001.serializer.ClientboundAttributeLayerSyncSerializer_v1001;
 import org.cloudburstmc.protocol.bedrock.data.attributelayer.*;
 import org.cloudburstmc.protocol.bedrock.data.camera.CameraEase;
-import org.cloudburstmc.protocol.common.util.VarInts;
+import org.cloudburstmc.protocol.bedrock.util.VarInts;
 
 public class ClientboundAttributeLayerSyncSerializer_v2192 extends ClientboundAttributeLayerSyncSerializer_v1001 {
 
@@ -15,8 +15,8 @@ public class ClientboundAttributeLayerSyncSerializer_v2192 extends ClientboundAt
     protected void writeEnvironmentAttribute(ByteBuf buf, BedrockCodecHelper helper, EnvironmentAttributeData e) {
         super.writeEnvironmentAttribute(buf, helper, e);
 
-        buf.writeByte(e.getNoiseAlignment().getType().ordinal());
-        VarInts.writeUnsignedInt(buf, e.getNoiseAlignment().getValue());
+        buf.writeByte(e.noiseAlignment().type().ordinal());
+        VarInts.writeUnsignedInt(buf, e.noiseAlignment().value());
     }
 
     @Override

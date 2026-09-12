@@ -9,7 +9,7 @@ import org.cloudburstmc.protocol.bedrock.data.ControlScheme;
 import org.cloudburstmc.protocol.bedrock.data.camera.CameraAimAssistPreset;
 import org.cloudburstmc.protocol.bedrock.data.camera.CameraAudioListener;
 import org.cloudburstmc.protocol.bedrock.data.camera.CameraPreset;
-import org.cloudburstmc.protocol.common.util.OptionalBoolean;
+import org.cloudburstmc.protocol.bedrock.util.OptionalBoolean;
 
 public class CameraPresetsSerializer_v2192 extends CameraPresetsSerializer_v818 {
 
@@ -55,7 +55,7 @@ public class CameraPresetsSerializer_v2192 extends CameraPresetsSerializer_v818 
         boolean applyInheritedStartingRotation = buffer.readBoolean();
         Vector2f startingRotation = helper.readOptional(buffer, null, helper::readVector2f);
 
-        return new CameraPreset(identifier, parentPreset, pos, yaw, pitch, viewOffset, radius, minYawLimit, maxYawLimit, listener, effects, rotationSpeed, snapToTarget, entityOffset, horizontalRotationLimit, verticalRotationLimit, continueTargeting, OptionalBoolean.empty(), blockListeningRadius, aimAssist, controlScheme,
+        return new CameraPreset(identifier, parentPreset, pos, yaw, pitch, listener, effects, viewOffset, radius, rotationSpeed, snapToTarget, entityOffset, horizontalRotationLimit, verticalRotationLimit, continueTargeting, OptionalBoolean.empty(), blockListeningRadius, aimAssist, minYawLimit, maxYawLimit, controlScheme,
                 applyInheritedStartingRotation, startingRotation);
     }
 }

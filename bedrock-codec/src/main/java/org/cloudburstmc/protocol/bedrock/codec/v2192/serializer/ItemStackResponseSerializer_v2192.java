@@ -7,7 +7,7 @@ import org.cloudburstmc.protocol.bedrock.data.inventory.itemstack.response.ItemS
 import org.cloudburstmc.protocol.bedrock.data.inventory.itemstack.response.ItemStackResponseContainer;
 import org.cloudburstmc.protocol.bedrock.data.inventory.itemstack.response.ItemStackResponseStatus;
 import org.cloudburstmc.protocol.bedrock.packet.ItemStackResponsePacket;
-import org.cloudburstmc.protocol.common.util.VarInts;
+import org.cloudburstmc.protocol.bedrock.util.VarInts;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,16 +20,16 @@ public class ItemStackResponseSerializer_v2192 extends ItemStackResponseSerializ
     @Override
     public void serialize(ByteBuf buffer, BedrockCodecHelper helper, ItemStackResponsePacket packet) {
         helper.writeArray(buffer, packet.getEntries(), (buf, response) -> {
-            buf.writeByte(response.getResult().ordinal());
-            VarInts.writeInt(buffer, response.getRequestId());
+            buf.writeByte(response.result().ordinal());
+            VarInts.writeInt(buffer, response.requestId());
 
-            if (response.getContainers().isEmpty()) {
+            if (response.containers().isEmpty()) {
                 buf.writeBoolean(false);
                 return;
             }
 
             buf.writeBoolean(true);
-            helper.writeArray(buf, response.getContainers(), helper::writeItemStackResponseContainer);
+            helper.writeArray(buf, response.containers(), helper::writeItemStackResponseContainer);
         });
     }
 

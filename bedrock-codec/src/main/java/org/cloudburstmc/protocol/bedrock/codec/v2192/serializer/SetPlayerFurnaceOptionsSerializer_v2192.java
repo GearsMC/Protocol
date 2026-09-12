@@ -7,7 +7,7 @@ import org.cloudburstmc.protocol.bedrock.codec.BedrockCodecHelper;
 import org.cloudburstmc.protocol.bedrock.codec.BedrockPacketSerializer;
 import org.cloudburstmc.protocol.bedrock.data.FurnaceOptions;
 import org.cloudburstmc.protocol.bedrock.packet.SetPlayerFurnaceOptionsPacket;
-import org.cloudburstmc.protocol.common.util.VarInts;
+import org.cloudburstmc.protocol.bedrock.util.VarInts;
 
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class SetPlayerFurnaceOptionsSerializer_v2192 implements BedrockPacketSerializer<SetPlayerFurnaceOptionsPacket> {
@@ -21,9 +21,9 @@ public class SetPlayerFurnaceOptionsSerializer_v2192 implements BedrockPacketSer
     }
 
     private void writeFurnaceOptions(ByteBuf buffer, FurnaceOptions options) {
-        VarInts.writeInt(buffer, options.getLeftTabIndex().ordinal());
-        buffer.writeBoolean(options.isFiltering());
-        VarInts.writeInt(buffer, options.getLayout().ordinal());
+        VarInts.writeInt(buffer, options.leftTabIndex().ordinal());
+        buffer.writeBoolean(options.filtering());
+        VarInts.writeInt(buffer, options.layout().ordinal());
     }
 
     @Override

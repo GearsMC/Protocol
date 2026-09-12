@@ -4,7 +4,7 @@ import io.netty.buffer.ByteBuf;
 import org.cloudburstmc.protocol.bedrock.codec.BedrockCodecHelper;
 import org.cloudburstmc.protocol.bedrock.codec.v2168.serializer.DimensionDataSerializer_v2168;
 import org.cloudburstmc.protocol.bedrock.data.definitions.DimensionDefinition;
-import org.cloudburstmc.protocol.common.util.VarInts;
+import org.cloudburstmc.protocol.bedrock.util.VarInts;
 
 import java.util.UUID;
 
@@ -15,7 +15,7 @@ public class DimensionDataSerializer_v2192 extends DimensionDataSerializer_v2168
     @Override
     protected void writeDefinition(ByteBuf buffer, BedrockCodecHelper helper, DimensionDefinition definition) {
         super.writeDefinition(buffer, helper, definition);
-        helper.writeString(buffer, definition.getDefaultBiome());
+        helper.writeString(buffer, definition.defaultBiome());
     }
 
     @Override

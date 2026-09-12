@@ -34,6 +34,10 @@ public final class PrimitiveText extends PrimitiveShape {
     @Nullable
     private final Color backgroundColor;
     /**
+     * @since v2192
+     */
+    private final float lineGapHeight;
+    /**
      * Whether the text participates in depth testing.
      *
      * @since v975
@@ -69,10 +73,26 @@ public final class PrimitiveText extends PrimitiveShape {
                          String text, boolean useRotation, @Nullable Color backgroundColor, boolean depthTest,
                          boolean showBackface, boolean showTextBackface, @Nullable Float maximumRenderDistance,
                          @Nullable Long attachedToEntityId) {
+        this(id, dimension, position, scale, rotation, totalTimeLeft, color, text, useRotation, backgroundColor,
+                0f, depthTest, showBackface, showTextBackface, maximumRenderDistance, attachedToEntityId);
+    }
+
+    /**
+     * Satır aralığını da alan kurucu. {@code lineGapHeight} v2192 (1.26.50) ile geldi;
+     * eski kurucular onu 0 kabul eder.
+     *
+     * @since v2192
+     */
+    public PrimitiveText(long id, int dimension, @Nullable Vector3f position, @Nullable Float scale,
+                         @Nullable Vector3f rotation, @Nullable Float totalTimeLeft, @Nullable Color color,
+                         String text, boolean useRotation, @Nullable Color backgroundColor, float lineGapHeight,
+                         boolean depthTest, boolean showBackface, boolean showTextBackface,
+                         @Nullable Float maximumRenderDistance, @Nullable Long attachedToEntityId) {
         super(id, dimension, position, scale, rotation, totalTimeLeft, color, maximumRenderDistance, attachedToEntityId);
         this.text = text;
         this.useRotation = useRotation;
         this.backgroundColor = backgroundColor;
+        this.lineGapHeight = lineGapHeight;
         this.depthTest = depthTest;
         this.showBackface = showBackface;
         this.showTextBackface = showTextBackface;

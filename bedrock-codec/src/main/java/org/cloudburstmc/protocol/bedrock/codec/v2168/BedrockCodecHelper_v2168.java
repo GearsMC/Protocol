@@ -1249,7 +1249,7 @@ public class BedrockCodecHelper_v2168 extends BedrockCodecHelper_v975 {
 
     @Override
     public void writePresenceConfiguration(ByteBuf buffer, PresenceConfiguration configuration) {
-        writeOptionalNull(buffer, configuration.getRichPresenceId(), this::writeString);
+        writeOptionalNull(buffer, configuration.richPresenceId(), this::writeString);
     }
 
     @Override

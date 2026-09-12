@@ -3,6 +3,7 @@ package org.cloudburstmc.protocol.bedrock.packet;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.cloudburstmc.math.vector.Vector3f;
 import org.cloudburstmc.protocol.bedrock.data.MemoryCategoryCounter;
 import org.cloudburstmc.protocol.bedrock.data.diagnostics.SystemCategory;
 import org.cloudburstmc.protocol.bedrock.data.diagnostics.WhiskerScopeDataSummary;
@@ -111,6 +112,14 @@ public class ServerboundDiagnosticsPacket implements BedrockPacket {
         private String entity;
         private long timeInNs;
         private int percentOfTotal;
+        /**
+         * @since v2192
+         */
+        private Vector3f position;
+        /**
+         * @since v2192
+         */
+        private String dimension;
     }
 
     @Data

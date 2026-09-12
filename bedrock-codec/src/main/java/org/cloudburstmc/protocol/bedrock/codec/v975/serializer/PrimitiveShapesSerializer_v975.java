@@ -47,15 +47,7 @@ public class PrimitiveShapesSerializer_v975 extends PrimitiveShapesSerializer_v9
                 PrimitiveSphere sphere = (PrimitiveSphere) shape;
                 buffer.writeByte(sphere.getSegments());
             }
-            case TEXT -> {
-                PrimitiveText text = (PrimitiveText) shape;
-                helper.writeString(buffer, text.getText());
-                buffer.writeBoolean(text.isUseRotation());
-                helper.writeOptionalNull(buffer, text.getBackgroundColor(), (buf, color) -> buf.writeIntLE(color.getRGB()));
-                buffer.writeBoolean(text.isDepthTest());
-                buffer.writeBoolean(text.isShowBackface());
-                buffer.writeBoolean(text.isShowTextBackface());
-            }
+            case TEXT -> writeText(buffer, helper, (PrimitiveText) shape);
             default -> throw new IllegalStateException("Unknown primitive shape type");
         }
     }
@@ -109,12 +101,37 @@ public class PrimitiveShapesSerializer_v975 extends PrimitiveShapesSerializer_v9
                     maximumRenderDistance, helper.readVector3f(buffer), attachedToEntityId);
             case SPHERE -> new PrimitiveSphere(id, dimension, position, scale, rotation, totalTimeLeft, color,
                     maximumRenderDistance, (int) buffer.readUnsignedByte(), attachedToEntityId);
-            case TEXT -> new PrimitiveText(id, dimension, position, scale, rotation, totalTimeLeft, color,
-                    helper.readString(buffer), buffer.readBoolean(),
-                    helper.readOptional(buffer, null, value -> new Color(value.readIntLE(), true)),
-                    buffer.readBoolean(), buffer.readBoolean(), buffer.readBoolean(),
+            case TEXT -> readText(buffer, helper, id, dimension, position, scale, rotation, totalTimeLeft, color,
                     maximumRenderDistance, attachedToEntityId);
             default -> throw new IllegalStateException("Unknown primitive shape type");
         };
+    }
+
+    /**
+     * Metin şekli gövdesini yazar. v2192 araya satır aralığını eklediği için ayrı metotta durur.
+     */
+    protected void writeText(ByteBuf buffer, BedrockCodecHelper helper, PrimitiveText text) {
+        helper.writeString(buffer, text.getText());
+        buffer.writeBoolean(text.isUseRotation());
+        helper.writeOptionalNull(buffer, text.getBackgroundColor(), (buf, color) -> buf.writeIntLE(color.getRGB()));
+        buffer.writeBoolean(text.isDepthTest());
+        buffer.writeBoolean(text.isShowBackface());
+        buffer.writeBoolean(text.isShowTextBackface());
+    }
+
+    /**
+     * Metin şekli gövdesini okur; ortak alanlar {@code readShape} tarafından okunmuş olarak gelir.
+     */
+    protected PrimitiveText readText(ByteBuf buffer, BedrockCodecHelper helper, long id, int dimension,
+                                     Vector3f position, Float scale, Vector3f rotation, Float totalTimeLeft,
+                                     Color color, Float maximumRenderDistance, Long attachedToEntityId) {
+        String value = helper.readString(buffer);
+        boolean useRotation = buffer.readBoolean();
+        Color backgroundColor = helper.readOptional(buffer, null, buf -> new Color(buf.readIntLE(), true));
+        boolean depthTest = buffer.readBoolean();
+        boolean showBackface = buffer.readBoolean();
+        boolean showTextBackface = buffer.readBoolean();
+        return new PrimitiveText(id, dimension, position, scale, rotation, totalTimeLeft, color, value, useRotation,
+                backgroundColor, depthTest, showBackface, showTextBackface, maximumRenderDistance, attachedToEntityId);
     }
 }

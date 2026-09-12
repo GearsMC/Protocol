@@ -9,8 +9,8 @@ import org.cloudburstmc.protocol.bedrock.data.inventory.itemstack.request.TextPr
 import org.cloudburstmc.protocol.bedrock.data.inventory.itemstack.request.action.ItemStackRequestActionType;
 import org.cloudburstmc.protocol.bedrock.data.inventory.itemstack.response.ItemStackResponseSlot;
 import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.InventorySource;
-import org.cloudburstmc.protocol.common.util.TypeMap;
-import org.cloudburstmc.protocol.common.util.VarInts;
+import org.cloudburstmc.protocol.bedrock.util.TypeMap;
+import org.cloudburstmc.protocol.bedrock.util.VarInts;
 
 import static java.util.Objects.requireNonNull;
 
@@ -77,23 +77,23 @@ public class BedrockCodecHelper_v2192 extends BedrockCodecHelper_v2168 {
     public void writeSource(ByteBuf buffer, InventorySource inventorySource) {
         requireNonNull(inventorySource, "InventorySource was null");
 
-        VarInts.writeUnsignedInt(buffer, inventorySource.getType().id());
+        VarInts.writeUnsignedInt(buffer, inventorySource.type().id());
 
-        switch (inventorySource.getType()) {
+        switch (inventorySource.type()) {
             case CONTAINER:
             case NON_IMPLEMENTED_TODO:
                 buffer.writeBoolean(true);
-                buffer.writeByte(inventorySource.getContainerId());
+                buffer.writeByte(inventorySource.containerId());
                 break;
             default:
                 buffer.writeBoolean(false);
                 break;
         }
 
-        switch (inventorySource.getType()) {
+        switch (inventorySource.type()) {
             case WORLD_INTERACTION:
                 buffer.writeBoolean(true);
-                VarInts.writeUnsignedInt(buffer, inventorySource.getFlag().ordinal());
+                VarInts.writeUnsignedInt(buffer, inventorySource.flag().ordinal());
                 break;
             default:
                 buffer.writeBoolean(false);

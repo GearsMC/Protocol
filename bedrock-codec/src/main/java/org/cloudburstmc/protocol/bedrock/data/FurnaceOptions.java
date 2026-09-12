@@ -1,13 +1,14 @@
 package org.cloudburstmc.protocol.bedrock.data;
 
-import lombok.Value;
-
-@Value
-public class FurnaceOptions {
-
-    FurnaceLeftTabIndex leftTabIndex;
-    boolean filtering;
-    FurnaceLayout layout;
+/**
+ * Oyuncunun fırın arayüzü tercihleri.
+ *
+ * @param leftTabIndex sol sekmede açık olan bölüm
+ * @param filtering    tarif süzgeci açık mı
+ * @param layout       arayüz yerleşimi
+ * @since v2192
+ */
+public record FurnaceOptions(FurnaceLeftTabIndex leftTabIndex, boolean filtering, FurnaceLayout layout) {
 
     public enum FurnaceLeftTabIndex {
         NONE,
