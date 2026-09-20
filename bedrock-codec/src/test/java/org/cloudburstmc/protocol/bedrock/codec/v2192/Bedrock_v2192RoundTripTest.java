@@ -19,6 +19,16 @@ import org.cloudburstmc.protocol.bedrock.data.inventory.itemstack.response.ItemS
 import org.cloudburstmc.protocol.bedrock.data.inventory.itemstack.response.ItemStackResponseSlot;
 import org.cloudburstmc.protocol.bedrock.data.inventory.itemstack.response.ItemStackResponseStatus;
 import org.cloudburstmc.protocol.bedrock.data.primitiveshape.PrimitiveText;
+import org.cloudburstmc.math.vector.Vector3i;
+import org.cloudburstmc.nbt.NbtMap;
+import org.cloudburstmc.protocol.bedrock.data.definitions.BlockDefinition;
+import org.cloudburstmc.protocol.bedrock.data.definitions.SimpleBlockDefinition;
+import org.cloudburstmc.protocol.bedrock.data.inventory.HandSlot;
+import org.cloudburstmc.protocol.bedrock.data.inventory.ItemData;
+import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.ItemUseTransaction;
+import org.cloudburstmc.protocol.bedrock.data.inventory.transaction.InventoryTransactionType;
+import org.cloudburstmc.protocol.bedrock.definition.SimpleDefinitionRegistry;
+import org.cloudburstmc.protocol.bedrock.packet.InventoryTransactionPacket;
 import org.cloudburstmc.protocol.bedrock.packet.BedrockPacket;
 import org.cloudburstmc.protocol.bedrock.packet.BossEventPacket;
 import org.cloudburstmc.protocol.bedrock.packet.CameraPresetsPacket;
@@ -215,6 +225,47 @@ class Bedrock_v2192RoundTripTest {
     }
 
     @SuppressWarnings("unchecked")
+    /**
+     * 26.50'de eşya kullanım işlemine el yuvası baytı eklendi (sıcak çubuk yuvasından hemen sonra). Okunmazsa
+     * sonraki bütün alanlar kayar; gidiş-dönüş bunu yakalar çünkü yazılmayan/okunmayan değer varsayılana düşer.
+     * Upstream'de {@code 7b029966}, vanilla istemci tarafında gophertunnel'ın {@code UseItemTransactionData}'sında
+     * aynı yerde duruyor.
+     */
+    @Test
+    void itemUseCarriesHandSlot() {
+        var definitions = SimpleDefinitionRegistry.<BlockDefinition>builder()
+                .add(new SimpleBlockDefinition("minecraft:stone", 7, NbtMap.EMPTY))
+                .build();
+
+        var packet = new InventoryTransactionPacket();
+        packet.setTransactionType(InventoryTransactionType.ITEM_USE);
+        packet.setActionType(0);
+        packet.setTriggerType(ItemUseTransaction.TriggerType.PLAYER_INPUT);
+        packet.setBlockPosition(Vector3i.from(4, 70, -9));
+        packet.setBlockFace(3);
+        packet.setHotbarSlot(5);
+        packet.setHand(HandSlot.OFFHAND);
+        packet.setItemInHand(ItemData.AIR);
+        packet.setPlayerPosition(Vector3f.from(4.5f, 70.5f, -9.5f));
+        packet.setClickPosition(Vector3f.from(0.5f, 0.25f, 0.75f));
+        packet.setBlockDefinition(definitions.getDefinition(7));
+        packet.setClientInteractPrediction(ItemUseTransaction.PredictedResult.SUCCESS);
+        packet.setClientCooldownState(0);
+
+        var helper = Bedrock_v2192.CODEC.createHelper();
+        helper.setBlockDefinitions(definitions);
+        ByteBuf buf = Unpooled.buffer();
+        try {
+            Bedrock_v2192.CODEC.tryEncode(helper, buf, packet);
+            var decoded = Bedrock_v2192.CODEC.tryDecode(helper, buf,
+                    Bedrock_v2192.CODEC.getPacketDefinition(InventoryTransactionPacket.class).id());
+            assertEquals(packet, decoded);
+            assertEquals(HandSlot.OFFHAND, ((InventoryTransactionPacket) decoded).getHand());
+        } finally {
+            buf.release();
+        }
+    }
+
     private static <T extends BedrockPacket> T roundTrip(BedrockCodec codec, T packet) {
         BedrockCodecHelper helper = codec.createHelper();
         ByteBuf buf = Unpooled.buffer();

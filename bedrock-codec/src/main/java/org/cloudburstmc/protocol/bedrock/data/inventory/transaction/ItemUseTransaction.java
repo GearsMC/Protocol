@@ -5,6 +5,7 @@ import lombok.Data;
 import org.cloudburstmc.math.vector.Vector3f;
 import org.cloudburstmc.math.vector.Vector3i;
 import org.cloudburstmc.protocol.bedrock.data.definitions.BlockDefinition;
+import org.cloudburstmc.protocol.bedrock.data.inventory.HandSlot;
 import org.cloudburstmc.protocol.bedrock.data.inventory.ItemData;
 
 import java.util.List;
@@ -46,6 +47,12 @@ public class ItemUseTransaction {
      * The hotbar slot.
      */
     private int hotbarSlot;
+    /**
+     * The hand the interaction was performed with.
+     *
+     * @since v2192
+     */
+    private HandSlot hand = HandSlot.MAINHAND;
     /**
      * The item in hand.
      */
