@@ -7,6 +7,7 @@ import org.cloudburstmc.protocol.bedrock.data.auth.CertificateChainPayload;
 import org.cloudburstmc.protocol.bedrock.data.auth.TokenPayload;
 import org.jose4j.json.JsonUtil;
 import org.jose4j.lang.JoseException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,11 @@ public class LoginSerializer_v818 extends LoginSerializer_v291 {
         object.put("AuthenticationType", payload.getAuthType().ordinal() - 1); // Adjusting ordinal to match the enum definition
         if (payload instanceof TokenPayload) {
             object.put("Token", ((TokenPayload) payload).getToken());
-            object.put("Certificate", "");
+            // GearsMC: vanilla bos dize kabul etmiyor; istemci token gonderirken de tek elemani bos olan bir zincir yazar
+            // (gophertunnel EncodeOffline ile ayni). Boyle olmayinca BDS 1.26.51 girisi "Connection Request invalid" ile duser.
+            Map<String, Object> emptyChain = new HashMap<>();
+            emptyChain.put("chain", Collections.singletonList(""));
+            object.put("Certificate", JsonUtil.toJson(emptyChain));
         } else if (payload instanceof CertificateChainPayload) {
             Map<String, Object> json = new HashMap<>();
             json.put("chain", ((CertificateChainPayload) payload).getChain());
