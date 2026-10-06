@@ -15,9 +15,12 @@ import java.util.UUID;
  * @param packId        the resource pack the dimension originates from, {@code null} on codecs
  *                      before v2168
  * @param defaultBiome  boyutun varsayılan biyomu (v2192'den beri); daha eski kodeklerde {@code null}
+ * @param cloudHeight   bulut katmanının yüksekliği (v2225'ten beri); daha eski kodeklerde {@code 0}
+ * @param renderClouds  bulutların çizilip çizilmeyeceği (v2225'ten beri); daha eski kodeklerde {@code false}
  */
 public record DimensionDefinition(String id, int maximumHeight, int minimumHeight, int generatorType,
-                                  int dimensionType, UUID packId, String defaultBiome) {
+                                  int dimensionType, UUID packId, String defaultBiome,
+                                  int cloudHeight, boolean renderClouds) {
 
     public DimensionDefinition(String id, int maximumHeight, int minimumHeight, int generatorType) {
         this(id, maximumHeight, minimumHeight, generatorType, 0, null, null);
@@ -31,5 +34,10 @@ public record DimensionDefinition(String id, int maximumHeight, int minimumHeigh
     public DimensionDefinition(String id, int maximumHeight, int minimumHeight, int generatorType,
                                int dimensionType, UUID packId) {
         this(id, maximumHeight, minimumHeight, generatorType, dimensionType, packId, null);
+    }
+
+    public DimensionDefinition(String id, int maximumHeight, int minimumHeight, int generatorType,
+                               int dimensionType, UUID packId, String defaultBiome) {
+        this(id, maximumHeight, minimumHeight, generatorType, dimensionType, packId, defaultBiome, 0, false);
     }
 }
