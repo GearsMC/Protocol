@@ -21,11 +21,10 @@ public class ClientboundUpdateSoundDataPacket implements BedrockPacket {
      */
     private long serverSoundHandle;
     /**
-     * The sound event action to apply to the sound.
-     *
-     * @deprecated since v2168
+     * The sound event to apply. v1001 always encodes {@code stop}; since v2225 this is the only event sent, and
+     * v2168 uses the per-event fields below instead.
      */
-    private String type;
+    private SoundData event;
     /**
      * @since v2168
      */

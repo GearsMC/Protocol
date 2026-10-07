@@ -13,14 +13,17 @@ import org.cloudburstmc.protocol.bedrock.data.camera.CameraEase;
  * @param CurrentTransitionTicks The current transition tick count.
  * @param TotalTransitionTicks   The total transition tick count.
  * @param easing                 The easing.
+ * @param clockName              Geçişin bağlı olduğu dünya saati (v2225'ten beri); daha eski kodeklerde {@code null}.
  * @param localTransitionTicks   The number of ticks elapsed in the local transition since v1001.
  * @param noiseTransition        Whether the transition uses noise since v1001.
+ * @param noiseName              Geçişin gürültüsü (v2225'ten beri, katman yerine özellikte); daha eski kodeklerde
+ *                               {@code null}.
  * @param noiseAlignment         Gürültü hizalaması (v2192'den beri); daha eski kodeklerde {@code null}.
  */
 public record EnvironmentAttributeData(String attributeName, @Nullable AttributeData from, AttributeData attribute,
                                        @Nullable AttributeData to, int CurrentTransitionTicks,
-                                       int TotalTransitionTicks, CameraEase easing,
-                                       int localTransitionTicks, boolean noiseTransition,
+                                       int TotalTransitionTicks, CameraEase easing, @Nullable String clockName,
+                                       int localTransitionTicks, boolean noiseTransition, @Nullable String noiseName,
                                        @Nullable NoiseAlignment noiseAlignment) {
     public EnvironmentAttributeData(String attributeName, @Nullable AttributeData from, AttributeData attribute,
                                     @Nullable AttributeData to, int CurrentTransitionTicks,
@@ -34,5 +37,14 @@ public record EnvironmentAttributeData(String attributeName, @Nullable Attribute
                                     int localTransitionTicks, boolean noiseTransition) {
         this(attributeName, from, attribute, to, CurrentTransitionTicks, TotalTransitionTicks, easing,
                 localTransitionTicks, noiseTransition, null);
+    }
+
+    public EnvironmentAttributeData(String attributeName, @Nullable AttributeData from, AttributeData attribute,
+                                    @Nullable AttributeData to, int CurrentTransitionTicks,
+                                    int TotalTransitionTicks, CameraEase easing,
+                                    int localTransitionTicks, boolean noiseTransition,
+                                    @Nullable NoiseAlignment noiseAlignment) {
+        this(attributeName, from, attribute, to, CurrentTransitionTicks, TotalTransitionTicks, easing,
+                null, localTransitionTicks, noiseTransition, null, noiseAlignment);
     }
 }

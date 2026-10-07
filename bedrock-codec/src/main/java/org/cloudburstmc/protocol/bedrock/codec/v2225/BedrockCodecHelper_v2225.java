@@ -2,7 +2,6 @@ package org.cloudburstmc.protocol.bedrock.codec.v2225;
 
 import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import org.cloudburstmc.protocol.bedrock.codec.BedrockCodecHelper;
 import org.cloudburstmc.protocol.bedrock.codec.EntityDataTypeMap;
 import org.cloudburstmc.protocol.bedrock.codec.v2192.BedrockCodecHelper_v2192;
 import org.cloudburstmc.protocol.bedrock.data.Ability;
@@ -32,16 +31,16 @@ public class BedrockCodecHelper_v2225 extends BedrockCodecHelper_v2192 {
     }
 
     @Override
-    public void writePassengerOfBlockArguments(ByteBuf buf, BedrockCodecHelper bedrockCodecHelper, PassengerOfBlockArguments passengerOfBlockArguments) {
-        writeVector3i(buf, passengerOfBlockArguments.getBlockPos());
-        writeVector3f(buf, passengerOfBlockArguments.getOffset());
-        buf.writeFloatLE(passengerOfBlockArguments.getRotation());
-        buf.writeFloatLE(passengerOfBlockArguments.getRotationLimit());
-        buf.writeByte(passengerOfBlockArguments.getEmoteType().ordinal());
+    public void writePassengerOfBlockArguments(ByteBuf buf, PassengerOfBlockArguments passengerOfBlockArguments) {
+        writeVector3i(buf, passengerOfBlockArguments.blockPos());
+        writeVector3f(buf, passengerOfBlockArguments.offset());
+        buf.writeFloatLE(passengerOfBlockArguments.rotation());
+        buf.writeFloatLE(passengerOfBlockArguments.rotationLimit());
+        buf.writeByte(passengerOfBlockArguments.emoteType().ordinal());
     }
 
     @Override
-    public PassengerOfBlockArguments readPassengerOfBlockArguments(ByteBuf buf, BedrockCodecHelper bedrockCodecHelper) {
+    public PassengerOfBlockArguments readPassengerOfBlockArguments(ByteBuf buf) {
         return new PassengerOfBlockArguments(
                 readVector3i(buf),
                 readVector3f(buf),
