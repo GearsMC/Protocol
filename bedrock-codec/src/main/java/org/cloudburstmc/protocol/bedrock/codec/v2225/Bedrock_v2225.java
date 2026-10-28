@@ -88,6 +88,7 @@ public class Bedrock_v2225 extends Bedrock_v2193 {
             .updateSerializer(LevelSoundEventPacket.class, new LevelSoundEventSerializer_v1001(SOUND_EVENTS))
             .updateSerializer(StartGamePacket.class, StartGameSerializer_v2225.INSTANCE)
             .updateSerializer(PlayerListPacket.class, PlayerListSerializer_v2225.INSTANCE)
+            .updateSerializer(ServerboundDiagnosticsPacket.class, new ServerboundDiagnosticsSerializer_v2225(MEMORY_CATEGORY_TYPES))
             .registerPacket(ClientboundMatchmakingStatePacket::new, ClientboundMatchmakingStateSerializer_v2225.INSTANCE, 353, PacketRecipient.CLIENT)
             .registerPacket(ServerboundStonecutterSetRecipePacket::new, ServerboundStonecutterSetRecipeSerializer_v2225.INSTANCE, 354, PacketRecipient.SERVER)
             .registerPacket(ClientboundStonecutterSetRecipePacket::new, ClientboundStonecutterSetRecipeSerializer_v2225.INSTANCE, 355, PacketRecipient.CLIENT)
