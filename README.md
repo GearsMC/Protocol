@@ -108,5 +108,11 @@ This library supports multiple Bedrock protocol versions. The table below lists 
 |     Bedrock_v924     |       1.26.0 - 1.26.3       |
 |     Bedrock_v944     |           1.26.10           |
 |     Bedrock_v975     |           1.26.20           |
+|    Bedrock_v1001     |           1.26.30           |
+|    Bedrock_v2168     |      1.26.40 - 1.26.44      |
+|    Bedrock_v2169     |           1.26.45           |
+|    Bedrock_v2192     |  1.26.50 (son önizleme)     |
+|    Bedrock_v2193     |      1.26.50 - 1.26.52      |
+|    Bedrock_v2225     |           1.26.60           |
 
 </details>
