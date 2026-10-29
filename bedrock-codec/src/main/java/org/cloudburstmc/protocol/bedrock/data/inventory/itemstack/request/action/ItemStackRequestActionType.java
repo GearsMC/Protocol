@@ -23,6 +23,10 @@ public enum ItemStackRequestActionType {
     CRAFT_RECIPE_OPTIONAL,
     CRAFT_REPAIR_AND_DISENCHANT,
     CRAFT_LOOM,
+    /**
+     * @since v2225
+     */
+    RESERVED,
     CRAFT_NON_IMPLEMENTED_DEPRECATED,
     CRAFT_RESULTS_DEPRECATED,
     /**
